@@ -1,2 +1,2 @@
-# kan_pos_staging
+# Khurshed Alam Nayeem (KAN) POS
 GenIT POS Generic
