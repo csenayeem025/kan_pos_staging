@@ -498,21 +498,26 @@ class Admin extends CI_Controller {
     }
     
     public function userSaveUpdate() {
-
+        
         $data = 0;
         $users = (object) array();
         if (!empty($this->input->post())):
             $post = array();
-            if ($this->input->post('newpassword') !== null):
+            $newpassword=$this->input->post('newpassword');
+            if (isset($newpassword)&&!empty($newpassword)):
                 $password = $this->input->post('newpassword');
                 $saltpass = $this->generateToken(32);
                 $token = $saltpass;
                 $password = sha1(sha1($password) . sha1($saltpass)) . ':' . $saltpass;
                 $post['password'] = $password;
             endif;
-            if ($this->input->post('id') !== null):
+            $checking=$this->input->post('id');
+            if (isset($checking)&&!empty($checking)):
                 $post['user_id'] = $this->input->post('id');
             endif;
+            //print_r($post);
+            //echo 0;
+            //die();
             $post['full_name'] = $this->input->post('full_name');
             $post['phone'] = $this->input->post('phone');
             $post['user_type'] = $this->input->post('user_type');
