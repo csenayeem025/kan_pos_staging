@@ -21,10 +21,10 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Home | '.$settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
-        $this->load->view('themplates/header', $data);
-        $this->load->view('themplates/menu', $data);
-        $this->load->view('brands/index', $data);
-        $this->load->view('themplates/footer', $data);
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/menu', $data);
+        $this->load->view('admin/dashboard', $data);
+        $this->load->view('templates/footer', $data);
     }
 
     public function banglaadmin() {
@@ -181,6 +181,56 @@ class Admin extends CI_Controller {
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdateservice', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+    
+    public function customers() {
+
+        $this->onLogCheck();
+        
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Services | '.$settings[0]['sitename'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/customers', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function addupdatecustomer() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/addupdatecustomer', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+    
+    public function stores() {
+
+        $this->onLogCheck();
+        
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Services | '.$settings[0]['sitename'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/stores', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function addupdatestore() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/addupdatestore', $data);
         $this->load->view('templates/footer_admin', $data);
     }
     
@@ -418,8 +468,6 @@ class Admin extends CI_Controller {
 
         $f = 0;
         $serial = $_POST['iDisplayStart'] + 1;
-
-        //$quizQuestions = $this->MusicUsers->find('all');
 
         foreach ($quizQuestions as $value) {
 

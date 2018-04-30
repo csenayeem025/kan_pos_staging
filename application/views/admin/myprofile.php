@@ -69,8 +69,8 @@
                                     <input class="form-control placeholder-no-fix" type="text" data-validation="required" data-validation-error-msg="Please give your Mobile number" placeholder="Mobile number" name="phone" /> </div>
                                 <div class="form-group">
                                     <label class="control-label visible-ie8 visible-ie9">Address</label>
-                                    <input class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give your address" type="text" placeholder="Address" name="address" /> </div>
-
+                                    <textarea class="form-control placeholder-no-fix" id="address" data-validation="required" data-validation-error-msg="Please give your address" name="address" placeholder="Address" rows="6"></textarea>
+                                </div>
                                 <div class="margiv-top-10">
 
                                     <button type="submit"  class="btn green"> Save Changes</button>

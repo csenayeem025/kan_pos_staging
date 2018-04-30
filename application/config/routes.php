@@ -50,6 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['banglaadmin'] = 'admin/banglaadmin';
+$route['discoverPageProcessing'] = 'discover/discoverPageProcessing';
+$route['saveUpdateAllDiscover'] = 'discover/saveUpdateAllDiscover';
+$route['discoverDeleteProcessing'] = 'discover/discoverDeleteProcessing';
 
 $route['default_controller'] = 'admin/banglaadmin';
 $route['404_override'] = '';

@@ -19,10 +19,24 @@
 <!--                                    <li class=""><a href="<?=base_url();?>" target="_blank"><i class="fa fa-home" aria-hidden="true"></i><span>View Site</span></a></li>-->
                                     <!--Product-->
                                     <li class="has-child-item close-item">
+                                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Customers</span></a>
+                                        <ul class="nav child-nav level-1">
+                                            <li><a href="<?=base_url();?>admin/addupdatecustomer">Add Customer</a></li>
+                                            <li><a href="<?=base_url();?>admin/customers">Customer List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-child-item close-item">
                                         <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Suppliers</span></a>
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdatesupplier">Add Supplier</a></li>
                                             <li><a href="<?=base_url();?>admin/suppliers">Supplier List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-child-item close-item">
+                                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Warehouses</span></a>
+                                        <ul class="nav child-nav level-1">
+                                            <li><a href="<?=base_url();?>admin/addupdatestore">Add Warehouse</a></li>
+                                            <li><a href="<?=base_url();?>admin/stores">Warehouse List</a></li>
                                         </ul>
                                     </li>
                                     <!--EMPLOYEE-->

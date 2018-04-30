@@ -164,7 +164,7 @@ $(function () {
                     $('#info_profile input[name=full_name]').val(response.full_name);
                     $('#info_profile input[name=email]').val(response.email);
                     $('#info_profile input[name=phone]').val(response.phone);
-                    $('#info_profile input[name=address]').val(response.address);
+                    $('#info_profile textarea[name=address]').val(response.address);
                     $('#info_profile select[name=country]').val(response.country);
                     if (response.sImage)
                         $('.sImage2').attr('src', baseUrl + 'uploads/avatars/' + response.sImage);
@@ -1194,8 +1194,8 @@ $(function () {
         $(".select2").select2();
 
     }
-    $(document).on('keyup', 'input[name=title],input[name=hl2]', function () {
-        urlstring = $('input[name=title],input[name=hl2]').val();
+    $(document).on('keyup', 'input[name=title],input[name=name],input[name=hl2]', function () {
+        urlstring = $('input[name=title],input[name=name],input[name=hl2]').val();
         urlstring = urlstring.split(' ').join('-');
         urlstring = urlstring.split(',').join('-');
         urlstring = urlstring.split('.').join('-');
@@ -1719,7 +1719,57 @@ $(function () {
                 $('#adminTableBox2').hide();
                 $('.btn-add').show();
             });
-            if ($('#edit_news').val() == 'news') {
+            //alert(contentid);
+            if(contentid){
+                onGetCurrentFormEditData(contentid);
+            }
+            function onGetCurrentFormEditData(contentid) {
+                $.ajax({
+                    "type": "POST",
+                    "url": baseUrl + "discover/onGetCurrentFormEditData",
+                    "data": 'type='+$('#category').val()+'&contentid=' + contentid,
+                    "success": function (response) {
+                        response=$.parseJSON(response);
+                        if (response.success == 1) {
+                            $('#currentAdminForm #id').val('' + response.id);
+                            //$('#user_type').select2('val', response.user_type);
+                            isActive = parseInt(response.isActive);
+                            $('input[name="isActive"].flat-red').iCheck('uncheck');
+                            if (isActive == 1) {
+                                $('input[name="isActive"].flat-red:eq(0)').iCheck('check');
+                            } else {
+                                $('input[name="isActive"].flat-red:eq(1)').iCheck('check');
+                            }
+                            if ($('.ckeditor').length > 0) {
+                                CKEDITOR.instances['body'].setData(response.details);
+                            } else {
+                                //document.getElementById('body').value = response.details;
+                            }
+                            $('#email').val(response.email);
+                            $('#name').val(response.name);
+                            $('#slug').val(response.slug);
+                            $('#address').val(response.address);
+                            $('#phone').val(response.phone);
+                            $('#store_type').val(response.store_type);
+                            
+                            localData = '';
+                            if (response.thumb_photo) {
+                                currTime = new Date().getTime();
+                                $('#my-file-selector1' + localData).attr('src', baseUrl +response.thumb_photo + '?time=' + currTime);
+                                $('#sImage').val(response.thumb_photo);
+                                $('#image-holder').show();
+                                $('#file-selector' + localData).val(response.thumb_photo);
+                            } else {
+                                $('#image-holder').hide();
+                                $('#file-selector' + localData).val('');
+                            }
+                            //alert("Record has been deleted completely.");
+                        } else
+                            alert("Problem occured.");
+                    }
+                });
+            }
+            if ($('#edit_news').val() == 'news--') {
 
             } else {
                 oTable = $('#adminTable').dataTable({
@@ -1754,11 +1804,11 @@ $(function () {
                                     console.log(aData);
                                     QuizId = aData[0];
 
-                                    if ($('#category').val() == 'news' || $('#category').val() == 'albums') {
-                                        window.location = baseUrl + 'admin/albumsedit/' + QuizId;
-                                    } else {
+                                    //if ( $('#category').val() == 'suppliers'|| $('#category').val() == 'stores') {
+                                        window.location=baseUrl+'admin/'+$('#'+$('#category').val()).val()+'?contentid='+QuizId;
+                                   // } else {
                                         // do as it is
-                                    }
+                                   // }
 
 
 
@@ -1783,20 +1833,22 @@ $(function () {
                                             CKEDITOR.instances['body'].setData(aData[6]);
                                         } else {
                                             //alert(aData[6]);
-                                            document.getElementById('body').value = aData[6];
+                                            //document.getElementById('body').value = aData[6];
                                             //$('#body').val(aData[6]);
                                         }
                                         
-                                        localData = '';
-                                        if (aData[11]) {
-                                            currTime = new Date().getTime();
-                                            $('#my-file-selector1' + localData).attr('src', baseUrl+aData[11] + '?time=' + currTime);
-                                            $('#sImage').val(aData[11]);
-                                            $('#image-holder').show();
-                                            $('#file-selector' + localData).val(aData[11]);
-                                        } else {
-                                            $('#image-holder').hide();
-                                            $('#file-selector' + localData).val('');
+                                        if($('#sImage').length>0){
+                                            localData = '';
+                                            if (aData[11]) {
+                                                currTime = new Date().getTime();
+                                                $('#my-file-selector1' + localData).attr('src', baseUrl+aData[11] + '?time=' + currTime);
+                                                $('#sImage').val(aData[11]);
+                                                $('#image-holder').show();
+                                                $('#file-selector' + localData).val(aData[11]);
+                                            } else {
+                                                $('#image-holder').hide();
+                                                $('#file-selector' + localData).val('');
+                                            }
                                         }
                                     }
                                     $('#slug').val(aData[4]);
@@ -1838,11 +1890,11 @@ $(function () {
                                     if ($('#category').val() == 'news')
                                         deleteUrl = baseUrl + 'admin/newsDeleteProcessing';
                                     else
-                                        deleteUrl = baseUrl + 'admin/questionDeleteProcessing';
+                                        deleteUrl = baseUrl + 'discoverDeleteProcessing';
                                     $.ajax({
                                         "type": "POST",
                                         "url": deleteUrl,
-                                        "data": 'action=deleteQuiz&id=' + quizId,
+                                        "data": 'type='+$('#category').val()+'&id=' + quizId,
                                         "success": function (response) {
                                             if (response == 1) {
                                                 oTable.fnDraw();

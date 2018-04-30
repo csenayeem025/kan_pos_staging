@@ -10,7 +10,7 @@
         <div class="leftside-content-header">
             <ul class="breadcrumbs">
                 <li><i class="fa fa-copy" aria-hidden="true"></i><a href="<?php echo base_url(); ?>admin/banglaadmin">Dashboard</a></li>
-                <li><a>Supplier</a></li>
+                <li><a>Warehouses</a></li>
             </ul>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-xs-12" style="margin-bottom: 10px;">
-                    <a href="<?php base_url();?>suppliers" class="btn btn-info pull-right btn-add---">Supplier List</a>
+                    <a href="<?php base_url();?>stores" class="btn btn-info pull-right btn-add---">Warehouse List</a>
                 </div>
             </div>
             <div class="panel">
@@ -29,15 +29,15 @@
                         <div class="col-sm-12">
                             <form id="currentAdminForm" class="form-horizontal" method="post" action="<?php echo base_url(); ?>saveUpdateAllDiscover">
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Supplier Name (<span class="red">*</span>):</label>
+                                    <label class="col-lg-3 control-label">Store Name (<span class="red">*</span>):</label>
                                     <div class="col-lg-7">
-                                        <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Supplier Name" type="text" placeholder="Enter Supplier Name">
+                                        <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Store Name" type="text" placeholder="Enter Supplier Name">
                                     </div>
                                 </div> 
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Profile URL (<span class="red">*</span>):</label>
+                                    <label class="col-lg-3 control-label">Store URL (<span class="red">*</span>):</label>
                                     <div class="col-lg-7">
-                                        <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give url" type="text" placeholder="URL">
+                                        <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Store url" type="text" placeholder="URL">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -53,6 +53,7 @@
                                     </div>
                                 </div> 
                                 
+                                
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Address:</label>
                                     <div class="col-lg-7">
@@ -60,36 +61,21 @@
                                     </div>
                                 </div> 
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Supplier Details (<span class="red">*</span>):</label>
+                                    <label class="col-lg-3 control-label">Store Type:</label>
                                     <div class="col-lg-7">
-                                        <textarea class="ckeditor form-control" id="body" name="body" rows="6" data-error-container="#editor2_error"></textarea>
+                                    <select class="form-control select2 store_type" id="store_type" name="store_type" data-placeholder="Store Type" style="width: 100%;">                          
+                                        <option>Store</option>
+                                        <option>Warehouse</option>
+                                    </select>
                                     </div>
-                                </div> 
+                                </div>   
                                 <div class="form-group" style="display: none">
                                     <label class="col-lg-3 control-label">Category:</label>
                                     <div class="col-lg-7">
-                                        <input id="category" name="category" value="suppliers" class="form-control validate[required]" type="text" >
+                                        <input id="category" name="category" value="stores" class="form-control validate[required]" type="text" >
                                     </div>
                                 </div> 
-                                <div class="form-group" >
-                                    <label class="col-lg-3 control-label">Feature Image (<span class="red">*</span>):</label>
-                                    <div class="col-lg-7 pleft">
-                                        Proposed Size: 1024X600 or 512X300
-                                        <div class="form-group1">
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail"  style="float:left">
-                                                    <img id="my-file-selector1" class="sImage" src="http://www.placehold.it/1024X600/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
-                                                <div class="clearfix"></div>
-                                                <label class="btn btn-primary btn-upload">
-                                                    <input id="my-file-selector" name="image" style="display:none;">                     
-                                                </label>				
-                                                <div id="image-holder" class="img-responsive" style="max-width:150px;">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
+                                
                                 <div class="form-group">
                                     <div class="col-lg-3">
                                     </div>
@@ -111,10 +97,10 @@
                                     <input name="sImage" id="sImage" class="hideme" value="" />
                                     <input name="action" id="action" class="hideme" value="userSaveUpdate" />
                                     <button class="btn btn-info pull-right btn-form-save" type="submit">Save</button>
-                                    <a href="<?php base_url();?>suppliers" class="btn btn-default pull-right btn-form-cancel---" style="margin-right:10px;" type="submit">Cancel</a>
+                                    <a href="<?php base_url();?>stores" class="btn btn-default pull-right btn-form-cancel---" style="margin-right:10px;" type="submit">Cancel</a>
                                 </div>
                             </form>
-                            <input type="hidden" id="suppliers" />
+                            <input type="hidden" id="stores" />
                         </div>
                     </div>
                 </div>

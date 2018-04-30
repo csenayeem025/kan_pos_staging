@@ -724,7 +724,7 @@ html.right-sidebar-opened .right-sidebar {
 }
 
 .content .content-header {
-  background: #f7f7f7;
+  background: #0f5d4d;
   color: #ffffff;
   -webkit-box-shadow: 0 2px 8px #cccccc;
           box-shadow: 0 2px 8px #cccccc;
@@ -770,7 +770,7 @@ html.right-sidebar-opened .right-sidebar {
 }
 
 .content .content-header ul.breadcrumbs li a {
-  color: #126f5c;
+  color: #fff;
 }
 
 .content .content-header ul.breadcrumbs li a:before {
