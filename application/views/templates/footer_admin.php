@@ -9,7 +9,7 @@
 </div>
 <!--BASIC scripts-->
 <!-- ========================================================= -->
-<script src="<?= base_url() ?>assets/admin/vendor/jquery/jquery-1.12.3.min.js"></script>
+
 <script src="<?= base_url() ?>assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>assets/admin/vendor/nano-scroller/nano-scroller.js"></script>
 <!--TEMPLATE scripts-->
@@ -37,7 +37,7 @@
 
 <script src="<?= base_url() ?>assets/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?= base_url() ?>assets/admin_resource/assets/global/plugins/icheck/icheck.min.js"></script>
-<script src="<?= base_url() ?>assets/admin_resource/assets/global/plugins/select2/js/select2.full.min.js"></script>
+
 <script src="<?= base_url() ?>assets/admin/js/examples/forms/validation.js"></script>
 <script type="text/javascript" src="<?= base_url() ?>assets/admin_resource/assets/jquery.fileuploadmulti.min.js" ></script>
 <script type="text/javascript" src="<?= base_url() ?>assets/admin/js/jquery.form-validator.min.js"></script>

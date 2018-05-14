@@ -16,10 +16,10 @@
     <div class="row animated fadeInRight"  id="admin_users">
         
         <div class="col-sm-12">
-            <?php if(isset($_SESSION['MusicUsers_user_type']) && !empty($_SESSION['MusicUsers_user_type'])&& $_SESSION['MusicUsers_user_type']=='admin'): ?>
+            <?php if(isset($_SESSION['MusicUsers_user_type']) && !empty($_SESSION['MusicUsers_user_type'])&& $_SESSION['MusicUsers_user_type']=='Admin'): ?>
         <div class="row">
             <div class="col-xs-12" style="margin-bottom: 10px;">
-                <a href="<?php base_url();?>addupdateuser" class="btn btn-info pull-right btn-add---">Add User</a>
+                <a href="<?php base_url();?>addupdateuser" class="btn btn-info pull-left btn-add---">Add User</a>
             </div>
         </div>
         <?php endif;?>

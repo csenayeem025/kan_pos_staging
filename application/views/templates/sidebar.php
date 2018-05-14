@@ -18,13 +18,28 @@
                                     <li class=""><a href="<?=base_url();?>banglaadmin"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a></li>
 <!--                                    <li class=""><a href="<?=base_url();?>" target="_blank"><i class="fa fa-home" aria-hidden="true"></i><span>View Site</span></a></li>-->
                                     <!--Product-->
+                                    <!--Product-->
                                     <li class="has-child-item close-item">
-                                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Customers</span></a>
+                                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Products</span></a>
+                                        <ul class="nav child-nav level-1">
+                                            <li><a href="<?=base_url();?>admin/addupdateproduct">Add Product</a></li>
+                                            <li><a href="<?=base_url();?>admin/products">Product List</a></li>
+                                            <li class="">
+                                                <a href="<?=base_url();?>admin/category">Categories</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="<?=base_url();?>admin/brands">Brands</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    
+<!--                                    <li class="has-child-item close-item">
+                                        <a><i class="fa fa-users" aria-hidden="true"></i><span>Customers</span></a>
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdatecustomer">Add Customer</a></li>
                                             <li><a href="<?=base_url();?>admin/customers">Customer List</a></li>
                                         </ul>
-                                    </li>
+                                    </li>-->
                                     <li class="has-child-item close-item">
                                         <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Suppliers</span></a>
                                         <ul class="nav child-nav level-1">

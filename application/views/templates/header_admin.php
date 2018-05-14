@@ -19,7 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/css/style.css?time=<?php echo time();?>">
-    
+<!--    <script src="<?= base_url() ?>assets/admin/vendor/jquery/jquery-1.12.3.min.js"></script>-->
+    <script src="<?=base_url()?>assets/js/jquery-2.2.4.min.js"></script>
+    <script src="<?= base_url() ?>assets/select2group/dist/js/select2.full.min.js"></script>
     <script type="text/javascript">
     var baseUrl='<?php echo base_url(); ?>';
     </script>

@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-xs-12" style="margin-bottom: 10px;">
-                    <a href="<?php base_url(); ?>users" class="btn btn-info pull-right btn-add---">User List</a>
+                    <a href="<?php base_url(); ?>users" class="btn btn-info pull-left btn-add---">User List</a>
                 </div>
             </div>
             <div class="panel">

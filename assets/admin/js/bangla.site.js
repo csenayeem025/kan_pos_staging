@@ -644,15 +644,21 @@ $(function () {
                 onGetCurrentFormEditData(contentid);
             }
             function onGetCurrentFormEditData(contentid) {
+                formType='';
+                if($('.isProductForm').length>0)
+                    formType='isProductForm';
+                else
+                    formType='isUser';
                 $.ajax({
                     "type": "POST",
                     "url": baseUrl + "admin/onGetCurrentFormEditData",
-                    "data": 'action=addedit&contentid=' + contentid,
+                    "data": 'action=addedit&contentid=' + contentid+'&formType='+formType,
                     "success": function (response) {
                         response=$.parseJSON(response);
                         if (response.success == 1) {
                             $('#currentAdminForm #id').val('' + response.user_id);
-                            $('#user_type').select2('val', response.user_type);
+                            //$('#user_type').select2('val', response.user_type);
+                            $('#user_type').val(response.user_type);
                             isActive = parseInt(response.isActive);
                             $('input[name="isActive"].flat-red').iCheck('uncheck');
                             if (isActive == 1) {
@@ -660,6 +666,7 @@ $(function () {
                             } else {
                                 $('input[name="isActive"].flat-red:eq(1)').iCheck('check');
                             }
+                            
                             $('#email').val(response.email);
                             $('#full_name').val(response.full_name);
                             $('#phone').val(response.phone);
@@ -1724,10 +1731,15 @@ $(function () {
                 onGetCurrentFormEditData(contentid);
             }
             function onGetCurrentFormEditData(contentid) {
+                formType='';
+                if($('.isProductForm').length>0)
+                    formType='isProductForm';
+                else
+                    formType='isUser';
                 $.ajax({
                     "type": "POST",
                     "url": baseUrl + "discover/onGetCurrentFormEditData",
-                    "data": 'type='+$('#category').val()+'&contentid=' + contentid,
+                    "data": 'type='+$('#category').val()+'&contentid=' + contentid+'&formType='+formType,
                     "success": function (response) {
                         response=$.parseJSON(response);
                         if (response.success == 1) {
@@ -1740,7 +1752,26 @@ $(function () {
                             } else {
                                 $('input[name="isActive"].flat-red:eq(1)').iCheck('check');
                             }
-                            if ($('.ckeditor').length > 0) {
+                            if(formType=='isProductForm'){
+                                $('#currentAdminForm #id').val('' + response.master_id);
+                                $('#type_id').val(response.type_id);
+                                $('#batch_no').val(response.batch_no);
+                                $('#trade_price').val(response.trade_price);
+                                $('#selling_price').val(response.selling_price);
+                                $('#expire_date ').val(response.expire_date );
+                                $('#product_unit ').val(response.product_unit );
+                                $('#supplier_code ').val(response.master_supplier_code );
+                                
+                                $('#model ').val(response.model );
+                                $('#partnumber ').val(response.partnumber );
+                                
+                                
+                                $('#product_size ').val(response.product_size );
+                                $('#instock ').val(response.instock );
+                                $('#short_quantity ').val(response.short_quantity );
+                                $('#tax ').val(response.tax );
+                                CKEDITOR.instances['body'].setData(response.descriptions);
+                            }else if ($('.ckeditor').length > 0) {
                                 CKEDITOR.instances['body'].setData(response.details);
                             } else {
                                 //document.getElementById('body').value = response.details;

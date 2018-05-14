@@ -24,6 +24,14 @@ class Supplier_model extends CI_Model {
         return $query->result_array();
     }
     
+    public function get_isActive_all() {
+        $this->db->select('*');
+        $this->db->from('pos_suppliers');
+        $this->db->where('isActive', 1);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
     public function get_data_all($id) {
         //echo $username;
         $this->db->select('*');

@@ -16,6 +16,9 @@ class Discover extends CI_Controller {
         $this->load->model('user_model');
         $this->load->model('supplier_model');
         $this->load->model('stores_model');
+        $this->load->model('categories_model');
+        $this->load->model('products_model');
+        $this->load->model('products_type');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -39,7 +42,57 @@ class Discover extends CI_Controller {
         $conditions = array();
         $currentLang='en';
 
-        if ($this->input->post('page_category') == 'suppliers'):
+        if ($this->input->post('page_category') == 'products'):
+            $conditions = array();
+
+            if (isset($sSearch) && !empty($sSearch)):
+                $like = $sSearch;
+                $quizMasterTotal = $this->products_model->get_all_data('', '', $like);
+                $quizQuestions = $this->products_model->get_all_data($limit, $offset, $like);
+
+            else:
+                $quizMasterTotal = $this->products_model->get_all_data();
+                $quizQuestions = $this->products_model->get_all_data($limit, $offset);
+            endif;
+
+            $totalTotal = count($quizMasterTotal);
+            $total = count($quizQuestions);
+            $data['sEcho'] = intval($_POST['sEcho']);
+            $data['iTotalRecords'] = $total;
+            $data['iTotalDisplayRecords'] = $totalTotal;
+
+            $f = 0;
+            $serial = $_POST['iDisplayStart'] + 1;
+
+            foreach ($quizQuestions as $value) {
+
+                $rowData = array();
+                $rowData[0] = $value['id'];
+                $rowData[1] = $serial;
+                $rowData[2] = $value['name'];
+                $rowData[3] = $value['slug'];
+                $rowData[4] = $value['product_code'];
+                $rowData[5] = $value['supplier_code'];
+                $rowData[6] = $value['descriptions'];
+                $rowData[7] = $value['isActive'];
+
+                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+
+
+                $rowData[8] = $x;
+                $rowData[9] = '';
+                $rowData[10] = $value['company_id'];
+                $rowData[11] = $value['cat_id'];
+                $rowData[12] = $value['trade_price'];
+                $rowData[10] = $value['selling_price'];
+                $rowData[11] = $value['expire_date'];
+                $rowData[12] = $value['product_unit'];
+                
+                $data['aaData'][] = $rowData;
+                $serial++;
+            }/// end of while()
+        elseif ($this->input->post('page_category') == 'suppliers'):
             $conditions = array();
 
             if (isset($sSearch) && !empty($sSearch)):
@@ -302,7 +355,73 @@ class Discover extends CI_Controller {
         $data= 0;
         if (!empty($this->input->post())):
             
-            if ($this->input->post('category')!==null&&$this->input->post('category')=='suppliers') {
+            if ($this->input->post('category')!==null&&$this->input->post('category')=='products') {
+                $post['descriptions']=$this->input->post('bodytxt');
+                
+                $post['thumb_photo']=$this->input->post('sImage');
+                //$post['languages']='en';
+                $post['slug']=$this->input->post('slug');
+                
+                if ($this->input->post('name')!==null &&
+                        !isset($post['descriptions']) ||empty($post['descriptions'])||
+                        !isset($post['thumb_photo']) ||empty($post['thumb_photo'])||
+                        !isset($post['slug']) ||empty($post['slug'])
+                    ) :
+                    $data= 2;
+                    echo $data;
+                    die();
+                endif;
+                if ($this->input->post('id') !== null):
+                    $post['id'] = $this->input->post('id');
+                endif;
+                if(isset($post['id'])&&empty($post['id'])):
+                    $post['product_code'] = 'P'.rand(9000,99999);
+                endif;
+                
+                $post['name'] = $this->input->post('name');
+                $post['slug'] = $this->input->post('slug');
+                 $post['supplier_code'] = $this->input->post('supplier_code');
+                
+                $post['cat_id'] = $this->input->post('cat_id');
+                $post['company_id'] = $this->input->post('type_id');
+                $post['batch_no'] = $this->input->post('partnumber');
+                $post['trade_price'] = $this->input->post('trade_price');
+                $post['selling_price'] = $this->input->post('selling_price');
+                $post['expire_date'] = $this->input->post('expire_date');
+                $post['product_unit'] = $this->input->post('product_unit');
+                
+                $post['product_size'] = $this->input->post('product_size');
+                $post['short_quantity'] = $this->input->post('short_quantity');
+                $post['instock'] = $this->input->post('instock');
+                $post['tax'] = $this->input->post('tax');
+                $post['date'] = date('Y-m-d',time());
+                //$post['discount'] = $this->input->post('discount');
+                $post['isActive'] = $this->input->post('isActive');
+                
+                //print_r($post);
+                $effectedid=$this->products_model->addupdate_data($post);
+                
+                $post2 = array();
+                $subdata = $this->products_model->get_subdata_all($effectedid);
+                if(count($subdata)>0):
+                    $post2['id'] = $subdata[0]['id'];
+                endif;
+                $subdata2 = $this->products_model->get_data_all($effectedid);
+                //print_r($subdata2);
+                $post2['product_code'] = $subdata2[0]['master_product_code'];
+                
+                $post2['product_id'] = $effectedid;
+                $post2['model'] = $this->input->post('model');
+                $post2['partnumber'] = $this->input->post('partnumber');
+                $post2['expire_date'] = $this->input->post('expire_date');
+                $post2['type_id'] = $this->input->post('type_id');
+                
+                $this->products_model->addupdate_subdata($post2);
+                
+                $data= 1;
+                echo $data;
+                die();
+            }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='suppliers') {
                 $post['details']=$this->input->post('bodytxt');
                 
                 $post['thumb_photo']=$this->input->post('sImage');
@@ -332,6 +451,51 @@ class Discover extends CI_Controller {
                 //print_r($post);
                 //die();
                 $this->supplier_model->addupdate_data($post);
+                
+                $data= 1;
+                echo $data;
+                die();
+            }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='category') {
+                $post=array();
+                
+                if ($this->input->post('id') !== null):
+                    $post['id'] = $this->input->post('id');
+                endif;
+                if($this->input->post('type')=='Default'):
+                    $post['type'] = 0;
+                else:
+                    $post['type'] = $this->input->post('type');
+                endif;
+                $post['name'] = $this->input->post('name');
+                $post['slug'] = $this->input->post('slug');
+                //$post['meta_keyword'] = $this->input->post('keywords');
+                //$post['meta_description'] = $this->input->post('seo_descriptions');
+                $post['languages'] = 'en';
+                $post['thumb_image'] = $this->input->post('thumbimage');
+                //$post['backgound_image'] = $this->input->post('bgimage');
+                $post['icon_image'] = $this->input->post('iconimage');
+                $post['parent_id'] = $this->input->post('parent_id');
+                
+                $this->categories_model->addupdate_data($post);
+                
+                $data= 1;
+                echo $data;
+                die();
+            }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='brands') {
+                $post=array();
+                
+                if ($this->input->post('id') !== null):
+                    $post['id'] = $this->input->post('id');
+                endif;
+                if($this->input->post('type')=='Default'):
+                    $post['type'] = 0;
+                else:
+                    $post['type'] = $this->input->post('type');
+                endif;
+                $post['name'] = $this->input->post('name');
+                $post['slug'] = $this->input->post('slug');
+                
+                $this->products_type->addupdate_data($post);
                 
                 $data= 1;
                 echo $data;
@@ -411,7 +575,9 @@ class Discover extends CI_Controller {
     
     public function onGetCurrentFormEditData(){
         $formdata=array();
-        if($this->input->post('type')=='suppliers')
+        if($this->input->post('type')=='products')
+            $formdata = $this->products_model->get_data_all($this->input->post('contentid'));
+        elseif($this->input->post('type')=='suppliers')
             $formdata = $this->supplier_model->get_data_all($this->input->post('contentid'));
         else if($this->input->post('type')=='stores')
             $formdata = $this->stores_model->get_data_all($this->input->post('contentid'));
@@ -424,7 +590,10 @@ class Discover extends CI_Controller {
     public function discoverDeleteProcessing() {
         
         $data= 0;
-        if($this->input->post('type')=='suppliers'):
+        if($this->input->post('type')=='products'):
+            $this->products_model->delete_user($this->input->post('id'));
+            $data= 1;
+        elseif($this->input->post('type')=='suppliers'):
             $this->supplier_model->delete_user($this->input->post('id'));
             $data= 1;
         else:

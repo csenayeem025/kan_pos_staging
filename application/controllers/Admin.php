@@ -12,14 +12,19 @@ class Admin extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->library('image_lib');
         $this->load->model('admin_model');
         $this->load->model('user_model');
+        $this->load->model('supplier_model');
+        $this->load->model('categories_model');
+        $this->load->model('products_model');
+        $this->load->model('products_type');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
     public function index() {
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Home | '.$settings[0]['sitename'];
+        $data['title'] = 'Home | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header', $data);
         $this->load->view('templates/menu', $data);
@@ -28,7 +33,7 @@ class Admin extends CI_Controller {
     }
 
     public function banglaadmin() {
-        
+
         if (isset($_SESSION['MusicUsers_user_id']) && !empty($_SESSION['MusicUsers_user_id'])):
             if ($_SESSION['MusicUsers_user_type'] == 'client'):
 
@@ -37,7 +42,7 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Dashboard | '.$settings[0]['sitename'];
+        $data['title'] = 'Dashboard | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -77,9 +82,9 @@ class Admin extends CI_Controller {
             redirect('/admin/banglaadmin');
         endif;
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Login | '.$settings[0]['sitename'];
+        $data['title'] = 'Login | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
-        
+
         $this->load->view('templates/header_login', $data);
         $this->load->view('admin/login', $data);
         $this->load->view('templates/footer_login', $data);
@@ -148,6 +153,11 @@ class Admin extends CI_Controller {
         //echo '<pre>';
         //print_r($_SESSION);
     }
+    
+    public function getSuppliers() {
+        $user = $this->supplier_model->get_isActive_all();
+        echo json_encode($user);
+    }
 
     public function onGetMyprofile() {
 
@@ -162,9 +172,9 @@ class Admin extends CI_Controller {
     public function services() {
 
         $this->onLogCheck();
-        
+
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Services | '.$settings[0]['sitename'];
+        $data['title'] = 'Services | ' . $settings[0]['sitename'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/services', $data);
@@ -176,20 +186,20 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdateservice', $data);
         $this->load->view('templates/footer_admin', $data);
     }
-    
+
     public function customers() {
 
         $this->onLogCheck();
-        
+
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Services | '.$settings[0]['sitename'];
+        $data['title'] = 'Services | ' . $settings[0]['sitename'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/customers', $data);
@@ -201,20 +211,20 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdatecustomer', $data);
         $this->load->view('templates/footer_admin', $data);
     }
-    
+
     public function stores() {
 
         $this->onLogCheck();
-        
+
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Services | '.$settings[0]['sitename'];
+        $data['title'] = 'Services | ' . $settings[0]['sitename'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/stores', $data);
@@ -226,20 +236,20 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdatestore', $data);
         $this->load->view('templates/footer_admin', $data);
     }
-    
+
     public function suppliers() {
 
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Suppliers | '.$settings[0]['sitename'];
+        $data['title'] = 'Suppliers | ' . $settings[0]['sitename'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/suppliers', $data);
@@ -251,7 +261,7 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Add/Update | '.$settings[0]['sitename'];
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -259,12 +269,146 @@ class Admin extends CI_Controller {
         $this->load->view('templates/footer_admin', $data);
     }
 
+    public function products() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Products | ' . $settings[0]['sitename'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/products', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function addupdateproduct() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $data['edit'] = -1;
+
+        if (isset($_GET['contentid']) && !empty($_GET['contentid'])):
+            $services = $this->products_model->get_data_all($_GET['contentid']);
+            if (count($services) > 0):
+                $services = $services[0];
+                $catIds = $services['cat_id'];
+                $data['edit'] = 1;
+                $data['cat_id'] = $services['cat_id'];
+                $data['getCategoryCheckTree'] = $this->getCategoryCheckTree($catIds,1);
+            endif;
+        else:
+            $data['cat_id'] = '';
+            $data['getCategoryCheckTree'] = $this->getCategoryCheckTree(null,1);
+        endif;
+
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/addupdateproduct', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function getCategoryCheckTree($catIds = null,$isActive=null) {
+        $currentLangShort = 'en';
+
+        $banglaCategory = $this->categories_model->get_active_data();
+//        echo '<pre>';
+//        print_r($banglaCategory);
+//        die();
+        $isParentId = 0;
+        $allCategory = array();
+        foreach ($banglaCategory as $key => $val):
+            $allCategory[$val['id']] = $val['parent_id'];
+
+//            if ($val['parent_id'] == 0)
+//                $isParentId = $val['id'];
+        endforeach;
+
+        $listArray = array();
+        if (!empty($catIds)):
+            $list = str_replace('##', ',', $catIds);
+            $list = str_replace('#', '', $list);
+            $list = explode(",", $list);
+            $listArray = $list;
+        endif;
+
+
+        //$this->layout = 'ajax';
+        //$this->autoRender = false;
+        $dataSource = array();
+        $banglaCategory = $this->categories_model->get_active_data($isParentId);
+        //('all', array('conditions' => array('MusicCategories.languages'=>$currentLangShort,'MusicCategories.parent_id'=>$isParentId), 'order' => array('MusicCategories.id asc')))->toArray();
+        if (count($banglaCategory) > 0):
+            foreach ($banglaCategory as $key => $value):
+                $value = (object) $value;
+                $currentValue = array();
+                $currentValue['id'] = $value->id;
+                $currentValue['text'] = $value->name;
+                if (in_array($value->id, $listArray)) :
+                    $currentValue['checked'] = true;
+                else:
+                    $currentValue['checked'] = false;
+                endif;
+
+                // 2nd level
+                $subCategory = $this->categories_model->get_active_data($value->id);
+                //$this->music_categories->find('all', array('conditions' => array('MusicCategories.parent_id'=>$value['id']), 'order' => array('MusicCategories.id asc')))->toArray();
+                $isChildren = array();
+                if (count($subCategory) > 0):
+                    foreach ($subCategory as $key2 => $value2):
+                        $value2 = (object) $value2;
+                        $currentValue2 = array();
+                        $currentValue2['id'] = $value2->id;
+                        $currentValue2['text'] = $value2->name;
+                        if (in_array($value2->id, $listArray)) :
+                            $currentValue2['checked'] = true;
+                        else:
+                            $currentValue2['checked'] = false;
+                        endif;
+
+                        //3rd level
+                        $subCategory2 = $this->categories_model->get_active_data($value2->id);
+//$this->music_categories->find('all', array('conditions' => array('MusicCategories.parent_id'=>$value2['id']), 'order' => array('MusicCategories.id asc')))->toArray();
+                        $isChildren2 = array();
+                        if (count($subCategory2) > 0):
+                            foreach ($subCategory2 as $key3 => $value3):
+                                $value3 = (object) $value3;
+                                $currentValue3 = array();
+                                $currentValue3['id'] = $value3->id;
+                                $currentValue3['text'] = $value3->name;
+                                if (in_array($value3->id, $listArray, true)) :
+                                    $currentValue3['checked'] = true;
+                                else:
+                                    $currentValue3['checked'] = false;
+                                endif;
+                                $isChildren2[] = $currentValue3;
+                            endforeach;
+                        endif;
+                        $currentValue2['children'] = $isChildren2;
+                        //$dataSource[]=$currentValue2;
+
+
+
+
+                        $isChildren[] = $currentValue2;
+                    endforeach;
+                endif;
+                $currentValue['children'] = $isChildren;
+                $dataSource[] = $currentValue;
+            endforeach;
+        endif;
+        return json_encode($dataSource);
+        //return $dataSource;
+    }
+
     public function myprofile() {
 
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'My Profile | '.$settings[0]['sitename'];
+        $data['title'] = 'My Profile | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -277,7 +421,7 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Settings | '.$settings[0]['sitename'];
+        $data['title'] = 'Settings | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -290,7 +434,7 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Users | '.$settings[0]['sitename'];
+        $data['title'] = 'Users | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -303,7 +447,7 @@ class Admin extends CI_Controller {
         $this->onLogCheck();
 
         $settings = $this->admin_model->get_app_settings();
-        $data['title'] = 'Add/Update |  '.$settings[0]['sitename'];
+        $data['title'] = 'Add/Update |  ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
@@ -447,17 +591,17 @@ class Admin extends CI_Controller {
         $sSearch = $_POST['sSearch'];
         $limit = $_POST['iDisplayLength'];
         $offset = $_POST['iDisplayStart'];
-        
+
         $conditions = array();
 
         if (isset($sSearch) && !empty($sSearch)):
-            $like=$sSearch;
-            $quizMasterTotal = $this->user_model->get_all_users('','',$like);
-            $quizQuestions = $this->user_model->get_all_users($limit, $offset,$like); 
-        
+            $like = $sSearch;
+            $quizMasterTotal = $this->user_model->get_all_users('', '', $like);
+            $quizQuestions = $this->user_model->get_all_users($limit, $offset, $like);
+
         else:
             $quizMasterTotal = $this->user_model->get_all_users();
-            $quizQuestions = $this->user_model->get_all_users($limit, $offset); 
+            $quizQuestions = $this->user_model->get_all_users($limit, $offset);
         endif;
 
         $totalTotal = count($quizMasterTotal);
@@ -481,7 +625,7 @@ class Admin extends CI_Controller {
             $rowData[6] = $value['isActive'];
 
             $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
-            if( $value['user_type']!='Admin')
+            if ($value['user_type'] != 'Admin')
                 $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
 
             $rowData[7] = $x;
@@ -496,23 +640,23 @@ class Admin extends CI_Controller {
             $data['aaData'] = array();
         echo json_encode($data);
     }
-    
+
     public function userSaveUpdate() {
-        
+
         $data = 0;
         $users = (object) array();
         if (!empty($this->input->post())):
             $post = array();
-            $newpassword=$this->input->post('newpassword');
-            if (isset($newpassword)&&!empty($newpassword)):
+            $newpassword = $this->input->post('newpassword');
+            if (isset($newpassword) && !empty($newpassword)):
                 $password = $this->input->post('newpassword');
                 $saltpass = $this->generateToken(32);
                 $token = $saltpass;
                 $password = sha1(sha1($password) . sha1($saltpass)) . ':' . $saltpass;
                 $post['password'] = $password;
             endif;
-            $checking=$this->input->post('id');
-            if (isset($checking)&&!empty($checking)):
+            $checking = $this->input->post('id');
+            if (isset($checking) && !empty($checking)):
                 $post['user_id'] = $this->input->post('id');
             endif;
             //print_r($post);
@@ -534,25 +678,191 @@ class Admin extends CI_Controller {
         echo $data;
     }
 
-    public function onGetCurrentFormEditData(){
-        $user = $this->user_model->get_user_data_all($this->input->post('contentid'));
-        if (count($user) > 0)
-            $user = $user[0];
+    public function onGetCurrentFormEditData() {
+        if($this->input->post('formType')=='isUser'):
+            $user = $this->user_model->get_user_data_all($this->input->post('contentid'));
+            if (count($user) > 0):
+                $user = $user[0];
+            endif;
+        endif;
         $user['success'] = true;
         echo json_encode($user);
     }
-    
+
     public function onDeleteUser() {
-        $data= 0;
-         if (!empty($this->input->post())):
+        $data = 0;
+        if (!empty($this->input->post())):
             $this->user_model->delete_user($this->input->post('id'));
-            $data= 1;
+            $data = 1;
         else:
-            $data= 0;
+            $data = 0;
         endif;
         echo $data;
     }
     
+    public function brands() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Users | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/brands', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function category() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Users | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/category', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+
+    public function getCategory($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        $data = array();
+        $data = $this->categories_model->get_all_data(0, $type);
+        echo json_encode($data);
+    }
+
+    public function getProductTypeSingle($id = null) {
+        $id = $this->input->post('id');
+        $data = $this->products_type->get_single_data($id);
+        if (count($data) > 0)
+            $data = $data[0];
+        $data['success'] = true;
+        echo json_encode($data);
+    }
+    
+    public function getCategorySingle($id = null) {
+        $id = $this->input->post('id');
+        $data = $this->categories_model->get_single_data($id);
+        if (count($data) > 0)
+            $data = $data[0];
+        $data['success'] = true;
+        echo json_encode($data);
+    }
+
+    public function getCategoryTableUPdate($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        $parent_id = $this->input->post('parent_id');
+        $data = array();
+        $data = $this->categories_model->get_all_data($parent_id, $type);
+        echo json_encode($data);
+    }
+    
+    public function getCategoryall($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        $parent_id = $this->input->post('parent_id');
+        $data = array();
+        $data = $this->categories_model->get_active_data($parent_id, $type);
+        echo json_encode($data);
+    }
+    
+    public function getBrandTableUPdate($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        
+        $data = array();
+        $data = $this->products_type->get_all_data($type);
+        echo json_encode($data);
+    }
+    
+    public function getProducttypes($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        
+        $data = array();
+        $data = $this->products_type->get_active_data($type);
+        echo json_encode($data);
+    }
+
+    public function setisactiveProductType() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $post['id'] = $this->input->post('id');
+            $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+            print_r($post);
+            $this->products_type->setisactive_category($post);
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+    
+    public function setisactiveCategory() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $post['id'] = $this->input->post('id');
+            $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+            print_r($post);
+            $this->categories_model->setisactive_category($post);
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+
+    public function deleteCategory() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $this->categories_model->delete_user($this->input->post('id'));
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+    
+    public function deleteProductType() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $this->products_type->delete_user($this->input->post('id'));
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+
+    function _generate_thumbnail($targetFoldernew=null, $source_image=null, $filename=null) {
+        $config1 = $config2 = array();
+
+        $config1['image_library'] = 'gd2';
+        $config1['source_image'] =$source_image;
+        $config1['new_image'] =$targetFoldernew. '/resize/' . $filename;
+        $config1['maintain_ratio'] = TRUE;
+        $config1['width'] = 600;
+
+        //$this->load->library('image_lib');
+        $this->image_lib->initialize($config1);
+        $this->image_lib->resize();
+
+        $this->image_lib->clear();
+
+        $config2['image_library'] = 'gd2';
+        $config2['source_image'] = $targetFoldernew.'/resize/' . $filename;
+        $config2['new_image'] = $targetFoldernew.'/crop/' . $filename;
+        $config2['maintain_ratio'] = TRUE;
+        $config2['width'] = 600;
+        $config2['height'] = 315;
+        $config2['x_axis'] = 0;
+        $config2['y_axis'] = 0;
+        //$config2['master_dim'] = 'height';
+
+        $this->image_lib->initialize($config2);
+        //$this->image_lib->crop();
+        $this->image_lib->resize();
+    }
+
     public function fileupload() {
 
         $action = $_GET['action'];
@@ -652,7 +962,7 @@ class Admin extends CI_Controller {
 
                     $message = $this->admin_model->update_favicon($imgurl);
 
-                    
+
                 elseif ($_GET['localData'] == 2):
 
                     $message = $this->music_settings->get(1);
@@ -724,7 +1034,8 @@ class Admin extends CI_Controller {
                  * SERVER IMAGE SETUP
                  */
                 $targetFolder = $targetPath = realpath('uploads/featuregallery'); // Relative to the root                    
-
+                
+                
                 if ($_FILES['image']['tmp_name'] != '') {
                     $tempFile = $_FILES['image']['tmp_name'];
                     $filename = $sImage;
@@ -732,6 +1043,10 @@ class Admin extends CI_Controller {
 
                     move_uploaded_file($tempFile, $targetFile);
                 }
+                
+                $targetFoldernew=realpath('uploads/products');
+                $this->_generate_thumbnail($targetFoldernew, $targetFile, $sImage);
+                
                 $imgurl = 'uploads/featuregallery/' . $filename;
                 $responseObj = (Object) array(
                             'status' => true,
