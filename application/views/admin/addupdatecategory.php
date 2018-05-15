@@ -335,7 +335,7 @@
                             //alert(html);
                             $('#currentCategory').html(html);
                         } else {
-                            html = '<option>Default</option>';
+                            html = '<option value="0">Default</option>';
                             $('#currentCategory').html(html);
                         }
                     }

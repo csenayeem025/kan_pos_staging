@@ -1776,9 +1776,10 @@ $(function () {
                             } else {
                                 //document.getElementById('body').value = response.details;
                             }
-                            $('body').animate({opacity:1},800,function(){
-                                $('#currentCategory').val(response.parent_id).trigger('change');
+                            $('body').animate({opacity:1},1200,function(){
                                 //alert(response.parent_id);
+                                if(response.parent_id)
+                                    $('#currentCategory').val(response.parent_id).trigger('change');
                             });
                             if (response.thumb_image){
                                         $('.thumbimage .sImage').attr('src', baseUrl + response.thumb_image);
