@@ -725,6 +725,19 @@ class Admin extends CI_Controller {
         $this->load->view('admin/category', $data);
         $this->load->view('templates/footer_admin', $data);
     }
+    
+    public function addupdatecategory() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Users | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/addupdatecategory', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
 
     public function getCategory($parent_id = null, $type = null) {
         $type = $this->input->post('type');

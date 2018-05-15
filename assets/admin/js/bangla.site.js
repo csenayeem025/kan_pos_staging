@@ -1776,6 +1776,21 @@ $(function () {
                             } else {
                                 //document.getElementById('body').value = response.details;
                             }
+                            $('body').animate({opacity:1},800,function(){
+                                $('#currentCategory').val(response.parent_id).trigger('change');
+                                //alert(response.parent_id);
+                            });
+                            if (response.thumb_image){
+                                        $('.thumbimage .sImage').attr('src', baseUrl + response.thumb_image);
+                                        $('.thumbimage').val(response.thumb_image);
+                                    }else
+                                        $('.thumbimage .sImage').attr('src', baseUrl + 'uploads/avatars/anonyme.png');
+                                    
+                                    if (response.icon_image){
+                                        $('.iconimage .sImage_icon').attr('src', baseUrl +  response.icon_image);
+                                        $('.iconimage').val(response.icon_image);
+                                    }
+                            
                             $('#email').val(response.email);
                             $('#name').val(response.name);
                             $('#slug').val(response.slug);
@@ -1840,6 +1855,9 @@ $(function () {
                                    // } else {
                                         // do as it is
                                    // }
+                                   if($('#category_').length>0){
+                                        window.location=baseUrl+'admin/addupdatecategory?contentid='+QuizId;
+                                   }
 
 
 
@@ -2023,6 +2041,7 @@ $(function () {
                             } else {
                                 $('.sImage').attr('src', baseUrl + response.imgurl);
                                 $('#sImage').val(response.imgurl);
+                                $('.thumbimage').val(response.imgurl);
                             }
                             onModalAlert('Successully uploaded.');
                         } else {

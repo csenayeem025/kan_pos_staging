@@ -50,6 +50,21 @@ class Categories_model extends CI_Model {
         return $query->result_array();
     }
     
+    public function get_all_data_list($limit=null, $offset=null, $like=null) {
+        
+        $this->db->select('*');
+        $this->db->from('pos_categories');
+        if(isset($like)):
+            $this->db->or_like('name', $like,'both');
+            //$this->db->or_like('email', $like,'both');
+        endif;
+        $this->db->order_by("id", "desc");
+        if(isset($limit))
+            $this->db->limit($limit, $offset);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
     public function get_active_data($parent_id=null,$type=null) {
         
         $this->db->select('*');

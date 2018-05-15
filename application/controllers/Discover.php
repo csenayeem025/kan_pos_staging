@@ -92,6 +92,64 @@ class Discover extends CI_Controller {
                 $data['aaData'][] = $rowData;
                 $serial++;
             }/// end of while()
+        elseif ($this->input->post('page_category') == 'category'):
+            $conditions = array();
+
+            if (isset($sSearch) && !empty($sSearch)):
+                $like = $sSearch;
+                $quizMasterTotal = $this->categories_model->get_all_data_list('', '', $like);
+                $quizQuestions = $this->categories_model->get_all_data_list($limit, $offset, $like);
+
+            else:
+                $quizMasterTotal = $this->categories_model->get_all_data_list();
+                $quizQuestions = $this->categories_model->get_all_data_list($limit, $offset);
+            endif;
+
+            $totalTotal = count($quizMasterTotal);
+            $total = count($quizQuestions);
+            $data['sEcho'] = intval($_POST['sEcho']);
+            $data['iTotalRecords'] = $total;
+            $data['iTotalDisplayRecords'] = $totalTotal;
+
+            $f = 0;
+            $serial = $_POST['iDisplayStart'] + 1;
+
+            foreach ($quizQuestions as $value) {
+
+                if($value['parent_id']==0):
+                    $value['parent_id']='Default';
+                else:
+                   $cat_name=$this->categories_model->get_single_data($value['parent_id']);
+                   if(isset($cat_name[0]['name'])&&!empty($cat_name[0]['name'])):
+                       $value['parent_id']=$cat_name[0]['name'];
+                   else:
+                       $value['parent_id']='Not specified';
+                   endif;
+                   
+                endif;
+                $rowData = array();
+                $rowData[0] = $value['id'];
+                $rowData[1] = $serial;
+                $rowData[2] = $value['name'];
+                $rowData[3] = $value['slug'];
+                $rowData[4] = $value['parent_id'];
+                $rowData[5] = '';
+                $rowData[6] = '';
+                $rowData[7] = $value['isActive'];
+
+                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+
+
+                $rowData[8] = $x;
+                $rowData[9] = '';
+                $rowData[10] = '';
+                $rowData[11] = '';
+                $rowData[12] = '';
+                
+                $data['aaData'][] = $rowData;
+                $serial++;
+            }/// end of while()
         elseif ($this->input->post('page_category') == 'suppliers'):
             $conditions = array();
 
@@ -577,6 +635,8 @@ class Discover extends CI_Controller {
         $formdata=array();
         if($this->input->post('type')=='products')
             $formdata = $this->products_model->get_data_all($this->input->post('contentid'));
+        elseif($this->input->post('type')=='category')
+            $formdata = $this->categories_model->get_data_all($this->input->post('contentid'));
         elseif($this->input->post('type')=='suppliers')
             $formdata = $this->supplier_model->get_data_all($this->input->post('contentid'));
         else if($this->input->post('type')=='stores')
@@ -592,6 +652,9 @@ class Discover extends CI_Controller {
         $data= 0;
         if($this->input->post('type')=='products'):
             $this->products_model->delete_user($this->input->post('id'));
+            $data= 1;
+        elseif($this->input->post('type')=='category'):
+            $this->categories_model->delete_user($this->input->post('id'));
             $data= 1;
         elseif($this->input->post('type')=='suppliers'):
             $this->supplier_model->delete_user($this->input->post('id'));
