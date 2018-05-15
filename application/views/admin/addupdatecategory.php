@@ -44,6 +44,14 @@
                                         </select>
                                     </div>
                                 </div> 
+                                <div class="form-group col-md-6" style="display:none;">
+                                    <label class="col-lg-4 control-label">Category Type:</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control" id="type" name="type">
+                                            <option>Product</option>
+                                        </select>
+                                    </div>
+                                </div> 
                                 <div class="form-group col-md-12">
                                     <label class="col-lg-2 control-label">Category Name (<span class="red">*</span>):</label>
                                     <div class="col-lg-10">
