@@ -4,7 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ShebaLagbe |</title>
+    <title><?php echo (isset($title)?$title:'KAN Admin Portal');?></title>
+    <meta name="author" content="Md. Khurshed Alam Nayeem">
     <meta name="url" content="">
     <meta property="og:url" content="">
     <meta property="og:type">

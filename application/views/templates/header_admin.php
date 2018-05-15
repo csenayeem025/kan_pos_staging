@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title><?php echo (isset($title)?$title:'KAN Admin Portal');?></title>
+    <meta name="author" content="Md. Khurshed Alam Nayeem">
     <link rel="apple-touch-icon" sizes="120x120" href="<?=base_url()?><?php echo (isset($favicon)?$favicon:'favicon-96x96.png');?>?time=<?php echo time();?>">
     <link rel="icon" type="image/png" sizes="192x192" href="<?=base_url()?><?php echo (isset($favicon)?$favicon:'favicon-96x96.png');?>?time=<?php echo time();?>">
     <link rel="icon" type="image/png" sizes="32x32" href="<?=base_url()?><?php echo (isset($favicon)?$favicon:'favicon-96x96.png');?>?time=<?php echo time();?>">

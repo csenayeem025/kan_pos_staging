@@ -708,7 +708,7 @@ $(function () {
                     "sInfoFiltered": "(filtered from _MAX_ total Records)"
                 },
                 "fnDrawCallback": function () {
-                    $('td img.pEdit', oTable.fnGetNodes()).each(function () {
+                    $('td .pEdit', oTable.fnGetNodes()).each(function () {
                         $(this).on('click', function () {
                             var nTr = this.parentNode.parentNode;
                             var aData = oTable.fnGetData(nTr);
@@ -761,7 +761,7 @@ $(function () {
 
                         });
                     });
-                    $('td img.pDrop', oTable.fnGetNodes()).each(function () {
+                    $('td .pDrop', oTable.fnGetNodes()).each(function () {
                         $(this).on('click', function () {
                             var nTr = this.parentNode.parentNode;
                             var aData = oTable.fnGetData(nTr);
@@ -1841,7 +1841,7 @@ $(function () {
                         "sInfoFiltered": "(filtered from _MAX_ total Records)"
                     },
                     "fnDrawCallback": function () {
-                        $('td img.pEdit', oTable.fnGetNodes()).each(function () {
+                        $('td .pEdit', oTable.fnGetNodes()).each(function () {
                             $(this).on('click', function () {
                                 var nTr = this.parentNode.parentNode;
                                 var aData = oTable.fnGetData(nTr);
@@ -1931,7 +1931,7 @@ $(function () {
 
                             });
                         });
-                        $('td img.pDrop', oTable.fnGetNodes()).each(function () {
+                        $('td .pDrop', oTable.fnGetNodes()).each(function () {
                             $(this).on('click', function () {
                                 var nTr = this.parentNode.parentNode;
                                 var aData = oTable.fnGetData(nTr);

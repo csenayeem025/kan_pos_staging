@@ -175,6 +175,7 @@ class Admin extends CI_Controller {
 
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Services | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/services', $data);
@@ -200,6 +201,7 @@ class Admin extends CI_Controller {
 
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Services | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/customers', $data);
@@ -225,6 +227,7 @@ class Admin extends CI_Controller {
 
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Services | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/stores', $data);
@@ -250,6 +253,7 @@ class Admin extends CI_Controller {
 
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Suppliers | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/suppliers', $data);
@@ -275,6 +279,7 @@ class Admin extends CI_Controller {
 
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Products | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/products', $data);
@@ -622,11 +627,11 @@ class Admin extends CI_Controller {
             $rowData[3] = $value['email'];
             $rowData[4] = $value['user_type'];
             $rowData[5] = '';
-            $rowData[6] = $value['isActive'];
+            $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
-            $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+            $x = '<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
             if ($value['user_type'] != 'Admin')
-                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                $x .= '<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
 
             $rowData[7] = $x;
             $rowData[8] = $value['full_name'];

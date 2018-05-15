@@ -74,11 +74,14 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['product_code'];
                 $rowData[5] = $value['supplier_code'];
                 $rowData[6] = $value['descriptions'];
-                $rowData[7] = $value['isActive'];
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
-                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
-                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
-
+                //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                
+                $x='<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
+                $x.='<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
+                
 
                 $rowData[8] = $x;
                 $rowData[9] = '';
@@ -135,11 +138,14 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['parent_id'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = $value['isActive'];
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
-                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
-                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
-
+                //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                
+                $x='<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
+                $x.='<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
+                
 
                 $rowData[8] = $x;
                 $rowData[9] = '';
@@ -182,11 +188,14 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['supplier_code'];
                 $rowData[5] = '';
                 $rowData[6] = $value['details'];
-                $rowData[7] = $value['isActive'];
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
-                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
-                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
-
+                //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                
+                $x='<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
+                $x.='<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
+                
 
                 $rowData[8] = $x;
                 $rowData[9] = '';
@@ -229,11 +238,14 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['store_code'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = $value['isActive'];
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
-                $x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
-                $x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
-
+                //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                
+                $x='<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
+                $x.='<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
+                
 
                 $rowData[8] = $x;
                 $rowData[9] = '';
@@ -533,6 +545,7 @@ class Discover extends CI_Controller {
                 //$post['backgound_image'] = $this->input->post('bgimage');
                 $post['icon_image'] = $this->input->post('iconimage');
                 $post['parent_id'] = $this->input->post('parent_id');
+                $post['isActive'] = $this->input->post('isActive');
                 
                 $this->categories_model->addupdate_data($post);
                 
