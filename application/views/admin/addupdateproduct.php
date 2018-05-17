@@ -22,7 +22,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-xs-12" style="margin-bottom: 10px;">
-                    <a href="<?php base_url(); ?>products" class="btn btn-info pull-right btn-add---">Product List</a>
+                    <a href="<?php base_url(); ?>products" class="btn btn-info pull-left btn-add---">Product List</a>
                 </div>
             </div>
             <div class="panel">
@@ -34,9 +34,15 @@
                                     <label for="name" class=" control-label">Product Name<span class="required">*</span></label>
                                     <input type="text"  class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Product Name" id="name" name="name" placeholder="Product Name">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" style="display: none;">
                                     <label for="name" class=" control-label">Product URL<span class="required">*</span></label>
                                     <input type="text"  class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Product Url" id="slug" name="slug" placeholder="Product Url">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="brand" class=" control-label"> Brand<span class="required">*</span></label>
+                                    <select name="type_id" id="type_id" class="form-control" style="width: 100%" >
+
+                                    </select>
                                 </div>
                                 <div class="col-md-12">
 
@@ -47,12 +53,7 @@
                                         </div>
                                         <div class="col-md-6"> 
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <label for="brand" class=" control-label"> Brand<span class="required">*</span></label>
-                                                    <select name="type_id" id="type_id" class="form-control" style="width: 100%" >
-
-                                                    </select>
-                                                </div>
+                                                
                                                 <div class="col-md-12">
                                                     <label for="brand" class=" control-label"> Supplier<span class="required">*</span></label>
                                                     <select name="supplier_code" id="supplier_code" class="form-control" style="width: 100%" >

@@ -1798,6 +1798,7 @@ $(function () {
                             $('#address').val(response.address);
                             $('#phone').val(response.phone);
                             $('#store_type').val(response.store_type);
+                            $('#remarks').val(response.remarks);
                             
                             localData = '';
                             if (response.thumb_photo) {

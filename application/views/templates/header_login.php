@@ -24,8 +24,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script type="text/javascript">
     var baseUrl='<?php echo base_url(); ?>';
     </script>
+    <style>
+        html.sign-in body{
+            background: #ecbe15 !important;
+        }
+    </style>
 </head>
 
 <body>
-<div class="wrap">
+<div class="wrap" >
     <!-- page BODY -->

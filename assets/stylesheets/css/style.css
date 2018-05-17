@@ -5533,3 +5533,96 @@ table.dataTable thead .sorting::after  {
   .page-header #user-headerbox .user-header-wrap .user-info span.user-profile {
     color: #1f1f1f;
     }
+    
+    
+    
+    
+    
+/****************************************************************
+						Custom for AutoExpress
+****************************************************************/
+
+.page-header {
+    background: #ecbe15;
+}
+.page-header .leftside-header .logo img {
+    padding: 2px 4px;
+    margin-left: 25%;
+}
+.content .content-header {
+    background: #710905;
+}
+.page-header #notice-headerbox .notice > i:hover {
+    color: #710905;
+}
+.left-sidebar .left-sidebar-header .left-sidebar-title {
+    color: #ecbe15;
+}
+.content .content-header ul.breadcrumbs li:first-child i {
+    color: #ecbe15;
+}
+.content .content-header ul.breadcrumbs li a:before {
+    color: #ecbe15;
+}
+ul#main-nav > li.open-item > a > i {
+    color: #ecbe15;
+}
+ul#main-nav > li.open-item > a {
+    -webkit-box-shadow: 0px -1px 0 #ecbe15 inset;
+    box-shadow: 0px -1px 0 #ecbe15 inset;
+}
+ul#main-nav.nav-left-lines ul.child-nav li:hover > a:before {
+    border-color: #ecbe15;
+}
+.nano > .nano-pane > .nano-slider {
+    background: #ecbe15;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background: #ecbe15;
+    border-color: #ecbe15;
+}
+.user-header-info .user-position {
+    background-color: #710905;
+}
+.tabs .nav-tabs > li.active a {
+    border-top: 2px solid #ecbe15;
+}
+.b-primary {
+    border-color: #ecbe15 !important;
+}
+a {
+    color: #710905;
+}
+a:hover, a:focus {
+    color: #b60700;
+}
+.color-primary {
+    color: #ecbe15 !important;
+}
+.bg-darker-1 {
+    background: #ecbe15 !important;
+}
+.color-w {
+    color: #710905 !important;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #710905;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+    color: #b90500;
+}
+.page-header .dropdown-box .drop-content.basic ul li:hover i {
+    color: #ecbe15;
+}
+.page-footer {
+    background: #ececec !important;
+    color: #6d6a6a !important;
+}
+.copyright a {
+    color: #2e2e2e !important;
+}
+ul#main-nav > li.open-item > a {
+    color: #ffffff;
+    -webkit-box-shadow: 0px -1px 0 #ecbe15 inset;
+    box-shadow: 0px -1px 0 #ecbe15 inset;
+}

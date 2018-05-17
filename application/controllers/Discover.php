@@ -543,6 +543,7 @@ class Discover extends CI_Controller {
                 $post['languages'] = 'en';
                 $post['thumb_image'] = $this->input->post('thumbimage');
                 //$post['backgound_image'] = $this->input->post('bgimage');
+                $post['remarks'] = $this->input->post('remarks');
                 $post['icon_image'] = $this->input->post('iconimage');
                 $post['parent_id'] = $this->input->post('parent_id');
                 $post['isActive'] = $this->input->post('isActive');

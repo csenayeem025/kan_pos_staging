@@ -41,7 +41,7 @@
                                         </ul>
                                     </li>-->
                                     <li class="has-child-item close-item">
-                                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Suppliers</span></a>
+                                        <a><i class="fa fa-user" aria-hidden="true"></i><span>Suppliers</span></a>
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdatesupplier">Add Supplier</a></li>
                                             <li><a href="<?=base_url();?>admin/suppliers">Supplier List</a></li>

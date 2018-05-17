@@ -46,7 +46,7 @@
                                         <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Brand Name" type="text" placeholder="Enter Brand Name">
                                     </div>
                                 </div> 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" style="display: none;">
                                     <label class="col-lg-4 control-label">Brand URL (<span class="red">*</span>):</label>
                                     <div class="col-lg-8">
                                         <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give url" type="text" placeholder="URL">
@@ -91,7 +91,7 @@
                     <tr data-id="0">
                         <th scope="col">#</th>
                         <th scope="col">Brands</th>
-                        <th scope="col">Type</th>
+<!--                        <th scope="col">Type</th>-->
 <!--                        <th scope="col">Sort Order</th>-->
                         <th scope="col">Is Active</th>
                     </tr>
@@ -229,7 +229,7 @@
                                         html += '<tr class="sort_order" data-id="' + zNodes[i]['id'] + '">';
                                             html += '<td scope="row">' + (i + 1) + '</td>';
                                             html += '<td>' + zNodes[i]['name'] + '</td>';
-                                            html += '<td>' + zNodes[i]['type'] + '</td>';
+                                            //html += '<td>' + zNodes[i]['type'] + '</td>';
                                             //html += '<td>' + zNodes[i]['sOrder'] + '</td>';
                                             html += '<td>';  
                                                 if(zNodes[i]['isActive']==1){

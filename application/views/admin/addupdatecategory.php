@@ -29,6 +29,12 @@
                         <div class="col-sm-12">
                             <form id="currentAdminForm" class="form-horizontal" method="post" action="<?php echo base_url(); ?>saveUpdateAllDiscover">
                                 <div class="form-group col-md-12">
+                                    <label class="col-lg-2 control-label">Category Name (<span class="red">*</span>):</label>
+                                    <div class="col-lg-10">
+                                        <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Category Name" type="text" placeholder="Enter Category Name">
+                                    </div>
+                                </div> 
+                                <div class="form-group col-md-12">
                                     <label class="col-lg-2 control-label">Main Category (<span class="red">*</span>):</label>
                                     <div class="col-lg-10">
                                         <select name="parent_id" multiple='multiple' id="currentCategory" data-validation-error-msg="Please give your category" class="form-control">
@@ -52,19 +58,19 @@
                                         </select>
                                     </div>
                                 </div> 
-                                <div class="form-group col-md-12">
-                                    <label class="col-lg-2 control-label">Category Name (<span class="red">*</span>):</label>
-                                    <div class="col-lg-10">
-                                        <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Category Name" type="text" placeholder="Enter Category Name">
-                                    </div>
-                                </div> 
+                                
                                 <div class="form-group col-md-12" style="display: none;">
                                     <label class="col-lg-4 control-label">Category URL (<span class="red">*</span>):</label>
                                     <div class="col-lg-8">
                                         <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give url" type="text" placeholder="URL">
                                     </div>
                                 </div>
-
+                                <div class="form-group col-md-12" style="clear: both;">
+                                    <label class="col-lg-2 control-label">Descriptions</label>
+                                    <div class="col-lg-10">
+                                    <textarea class="form-control "  id="remarks" name="remarks" rows="6"></textarea>
+                                    </div>
+                                </div>
                                 <div class="form-group" style="display: none">
                                     <label class="col-lg-4 control-label">Category:</label>
                                     <div class="col-lg-8">

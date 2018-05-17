@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-xs-12" style="margin-bottom: 10px;">
-                    <a href="<?php base_url();?>stores" class="btn btn-info pull-right btn-add---">Warehouse List</a>
+                    <a href="<?php base_url();?>stores" class="btn btn-info pull-left btn-add---">Warehouse List</a>
                 </div>
             </div>
             <div class="panel">
@@ -34,7 +34,7 @@
                                         <input id="name" name="name" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Store Name" type="text" placeholder="Enter Supplier Name">
                                     </div>
                                 </div> 
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;">
                                     <label class="col-lg-3 control-label">Store URL (<span class="red">*</span>):</label>
                                     <div class="col-lg-7">
                                         <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Store url" type="text" placeholder="URL">
