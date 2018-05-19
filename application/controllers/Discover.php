@@ -772,6 +772,11 @@ class Discover extends CI_Controller {
                 $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
                 
                 $this->products_model->setisactive_category($post);
+            elseif($this->input->post('type')=='category'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->categories_model->setisactive_category($post);
             elseif($this->input->post('type')=='customers'):
                 $post['id'] = $this->input->post('id');
                 $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
