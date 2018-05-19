@@ -19,6 +19,7 @@ class Admin extends CI_Controller {
         $this->load->model('categories_model');
         $this->load->model('products_model');
         $this->load->model('products_type');
+        $this->load->model('company_type');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -627,7 +628,7 @@ class Admin extends CI_Controller {
             $rowData[3] = $value['email'];
             $rowData[4] = $value['user_type'];
             $rowData[5] = '';
-            $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+            $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
             $x = '<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
             if ($value['user_type'] != 'Admin')
@@ -751,6 +752,15 @@ class Admin extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function getBrandSingle($id = null) {
+        $id = $this->input->post('id');
+        $data = $this->company_type->get_single_data($id);
+        if (count($data) > 0)
+            $data = $data[0];
+        $data['success'] = true;
+        echo json_encode($data);
+    }
+    
     public function getProductTypeSingle($id = null) {
         $id = $this->input->post('id');
         $data = $this->products_type->get_single_data($id);
@@ -789,7 +799,7 @@ class Admin extends CI_Controller {
         $type = $this->input->post('type');
         
         $data = array();
-        $data = $this->products_type->get_all_data($type);
+        $data = $this->company_type->get_all_data($type);
         echo json_encode($data);
     }
     
@@ -800,7 +810,29 @@ class Admin extends CI_Controller {
         $data = $this->products_type->get_active_data($type);
         echo json_encode($data);
     }
+    
+    public function getBrands($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        
+        $data = array();
+        $data = $this->company_type->get_active_data($type);
+        echo json_encode($data);
+    }
 
+    public function setisactiveBrand() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $post['id'] = $this->input->post('id');
+            $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+            print_r($post);
+            $this->company_type->setisactive_category($post);
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+    
     public function setisactiveProductType() {
         $data = 0;
         if (!empty($this->input->post())):
@@ -833,6 +865,17 @@ class Admin extends CI_Controller {
         $data = 0;
         if (!empty($this->input->post())):
             $this->categories_model->delete_user($this->input->post('id'));
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+    
+    public function deleteBrand() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            $this->company_type->delete_user($this->input->post('id'));
             $data = 1;
         else:
             $data = 0;

@@ -32,14 +32,13 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    
-<!--                                    <li class="has-child-item close-item">
+                                    <li class="has-child-item close-item">
                                         <a><i class="fa fa-users" aria-hidden="true"></i><span>Customers</span></a>
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdatecustomer">Add Customer</a></li>
                                             <li><a href="<?=base_url();?>admin/customers">Customer List</a></li>
                                         </ul>
-                                    </li>-->
+                                    </li>
                                     <li class="has-child-item close-item">
                                         <a><i class="fa fa-user" aria-hidden="true"></i><span>Suppliers</span></a>
                                         <ul class="nav child-nav level-1">

@@ -293,7 +293,7 @@
         function onCategoryTableUPdate() {
             
             $.ajax({
-                url: baseUrl + 'admin/getProducttypes',
+                url: baseUrl + 'admin/getBrands',
                 type: 'post',
                 data: { type: 'Product'},
                 success: function (response) {

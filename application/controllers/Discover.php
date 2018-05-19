@@ -19,6 +19,7 @@ class Discover extends CI_Controller {
         $this->load->model('categories_model');
         $this->load->model('products_model');
         $this->load->model('products_type');
+        $this->load->model('company_type');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -74,7 +75,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['product_code'];
                 $rowData[5] = $value['supplier_code'];
                 $rowData[6] = $value['descriptions'];
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'   src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -138,7 +139,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['parent_id'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -188,7 +189,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['supplier_code'];
                 $rowData[5] = '';
                 $rowData[6] = $value['details'];
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'   src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -238,7 +239,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['store_code'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' style='width:60px'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' style='width:60px' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -566,8 +567,9 @@ class Discover extends CI_Controller {
                 endif;
                 $post['name'] = $this->input->post('name');
                 $post['slug'] = $this->input->post('slug');
+                $post['thumb_image'] = $this->input->post('thumbimage');
                 
-                $this->products_type->addupdate_data($post);
+                $this->company_type->addupdate_data($post);
                 
                 $data= 1;
                 echo $data;

@@ -52,7 +52,25 @@
                                         <input id="slug" name="slug" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give url" type="text" placeholder="URL">
                                     </div>
                                 </div>
+                                <div class="form-group col-md-6 thumbimage" style="clear:both;">
+                                    <label class="col-lg-4 control-label">Thumb Image (<span class="red">*</span>):</label>
+                                    <div class="col-lg-8 pleft">
+                                        Proposed Size: 512X300
+                                        <div class="form-group1">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail"  style="float:left">
+                                                    <img  id="my-file-selector1" class="sImage" src="http://www.placehold.it/1024X600/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                <div class="clearfix"></div>
+                                                <label class="btn btn-primary btn-upload">
+                                                    <input id="my-file-selector" name="image" style="display:none;">                     
+                                                </label>				
+                                                <div id="image-holder" class="img-responsive" style="max-width:150px;">
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
                                 <div class="form-group" style="display: none">
                                     <label class="col-lg-4 control-label">Category:</label>
                                     <div class="col-lg-8">
@@ -61,7 +79,7 @@
                                 </div> 
                                 
                                   
-                                <div class="box-footer">   
+                                <div class="box-footer" style="clear:both;">   
                                     <input name="parent_id" id="parent_id" value="" class="parent_id hideme" />      
                                     <input name="type" id="type" value="" class="type hideme" /> 
                                     
@@ -91,9 +109,9 @@
                     <tr data-id="0">
                         <th scope="col">#</th>
                         <th scope="col">Brands</th>
-<!--                        <th scope="col">Type</th>-->
-<!--                        <th scope="col">Sort Order</th>-->
-                        <th scope="col">Is Active</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -180,7 +198,7 @@
                     });
                     function onGetCategory(cat_id){
                         $.ajax({
-                            url: baseUrl + 'admin/getProductTypeSingle',
+                            url: baseUrl + 'admin/getBrandSingle',
                             type: 'post',
                             data: {id:cat_id},
                             success: function (response) {
@@ -192,6 +210,11 @@
                                     $('#currentAdminForm input[name=id]').val(response.id);
                                     $('input[name=name]').val(response.name);
                                     $('input[name=slug]').val(response.slug);
+                                    if (response.thumb_image){
+                                        $('.thumbimage .sImage').attr('src', baseUrl + response.thumb_image);
+                                        $('.thumbimage').val(response.thumb_image);
+                                    }else
+                                        $('.thumbimage .sImage').attr('src', baseUrl + 'uploads/avatars/anonyme.png');
                                     
                                 } else {
                                     onModalAlert('Sorry, server processing error.');
@@ -199,7 +222,61 @@
                             }
                         });
                     }
-                    
+                    function initUpload(localData) {
+
+                        if (localData == 1)
+                            str = '';
+                        else if (localData == 2)
+                            str = 'Upload File';
+                        else
+                            str = 'Upload Thumb Image';
+
+                        allowedType = 'jpg,png,gif,jpeg';
+
+                        var settings = "settings_" + localData;
+                        settings = {
+                            url: baseUrl + 'admin/fileupload?action=featurefileupload',
+                            method: "POST",
+                            allowedTypes: allowedType,
+                            fileName: "image",
+                            multiple: false,
+                            cache: false,
+                            dragDropStr: '<span>' + str + '</span>',
+                            onSubmit: function () {
+                                this.url = baseUrl + 'admin/fileupload?action=featurefileupload';
+                                $('#loader-gallery' + localData).show();
+                            },
+                            onSuccess: function (files, data, xhr)
+                            {
+                                response = $.parseJSON(data);
+                                console.log(response);
+                                if (response.status == 1) {
+                                    if (localData == 2) {
+                                        $('#currentAdminForm2 #sImage').val(response.imgurl);
+                                    } else {
+                                        $('.thumbimage .sImage').attr('src', baseUrl + response.imgurl);
+                                        $('.thumbimage').val(response.imgurl);
+                                    }
+                                    onModalAlert('Successully uploaded.');
+                                } else {
+                                    onModalAlert(response.error);
+
+                                }
+                            },
+                            afterUploadAll: function ()
+                            {
+
+                            },
+                            onError: function (files, status, errMsg)
+                            {
+                                $('#myModal .modal-body').html('There are uploading problem.');
+                                $('#myModal').modal('show');
+                            }
+                        }
+
+                        $("#my-file-selector" + localData).uploadFile(settings);
+                    }
+                    initUpload('');
                     function onCategoryUPdate() {
                         
                     }
@@ -213,6 +290,13 @@
                     })
 
                     function onCategoryTableUPdate() {
+                        //alert(1);
+                        $('#currentAdminForm input[name=id]').val('');
+                        $('#currentAdminForm input[name=name]').val('');
+                        $('#currentAdminForm input[name=slug]').val('');
+                        $('#currentAdminForm .thumbimage .sImage').attr('src', 'http://www.placehold.it/1024X600/EFEFEF/AAAAAA&text=no+image');
+                        $('#currentAdminForm .thumbimage').val('');
+                                        
                         currentCategoryList=$('#currentCategory').val();
                         if(currentCategoryList&&currentCategoryList.length>0)
                             currentCategoryList=currentCategoryList[0];
@@ -229,16 +313,21 @@
                                         html += '<tr class="sort_order" data-id="' + zNodes[i]['id'] + '">';
                                             html += '<td scope="row">' + (i + 1) + '</td>';
                                             html += '<td>' + zNodes[i]['name'] + '</td>';
-                                            //html += '<td>' + zNodes[i]['type'] + '</td>';
+                                            if(zNodes[i]['thumb_image'])
+                                                html += '<td><img src="' + baseUrl+zNodes[i]['thumb_image'] + '" width="90px" /></td>';
+                                            else
+                                                html+='<td></td>';
                                             //html += '<td>' + zNodes[i]['sOrder'] + '</td>';
                                             html += '<td>';  
                                                 if(zNodes[i]['isActive']==1){
-                                                    html +='<span class="isEnable" data-isactive="' + zNodes[i]['isActive'] + '" data-id="' + zNodes[i]['id'] + '">Disable</span>';
+                                                    html+='<img class="isEnable" data-isactive="' + zNodes[i]['isActive'] + '" data-id="' + zNodes[i]['id'] + '" src="'+baseUrl+'assets/images/active-btn.png?time=<?php echo time();?>" />';
                                                 }else{
-                                                    html +='<span class="isEnable" data-isactive="' + zNodes[i]['isActive'] + '" data-id="' + zNodes[i]['id'] + '">Enable</span>';
+                                                    html+='<img class="isEnable" data-isactive="' + zNodes[i]['isActive'] + '" data-id="' + zNodes[i]['id'] + '" src="'+baseUrl+'assets/images/inactive-btn.png?time=<?php echo time();?>" />';
                                                 }
-                                                html +='&nbsp;/&nbsp;';
-                                                html +='<span class="isDelete" data-id="' + zNodes[i]['id'] + '">Delete</span>';
+                                                html +='</td>';
+                                                html +='<td>';
+                                                html+='<button class="btn btn-danger btn-sm isDelete" data-id="' + zNodes[i]['id'] + '"><i class="fa fa-trash"></i> Delete</button>';
+                                                
                                             html +='</td>';
                                         html += '</tr>';
                                     }
@@ -261,7 +350,7 @@
                         isActive=$(this).data('isactive');
                         if (confirm("Do you really want to change Record?")) {
                             $.ajax({
-                                url: baseUrl + 'admin/setisactiveProductType',
+                                url: baseUrl + 'admin/setisactiveBrand',
                                 type: 'post',
                                 data: {action: 'isactiveCategory', id: id,isactive:isActive},
                                 success: function (response) {
@@ -275,7 +364,7 @@
                         id=$(this).data('id');
                         if (confirm("Do you really want to delete Record?")) {
                             $.ajax({
-                                url: baseUrl + 'admin/deleteProductType',
+                                url: baseUrl + 'admin/deleteBrand',
                                 type: 'post',
                                 data: {action: 'deleteCategory', id: id},
                                 success: function (response) {
