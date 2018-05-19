@@ -1,33 +1,39 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Supplier_model extends CI_Model {
+class Customer_type extends CI_Model {
 
     public function __construct() {
 
         parent::__construct();
         //$this->load->database();
     }
-
-    public function get_all_data($limit=null, $offset=null, $like=null) {
+    
+    
+    
+    public function get_all_data($type=null) {
         
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
-        if(isset($like)):
-            $this->db->or_like('name', $like,'both');
-            $this->db->or_like('email', $like,'both');
+        $this->db->from('pos_customertype');
+        
+        if(isset($type)):
+            $this->db->where('type', $type);
         endif;
-        $this->db->order_by("id", "desc");
-        if(isset($limit))
-            $this->db->limit($limit, $offset);
+        $this->db->order_by("name", "asc");
         $query = $this->db->get();
         return $query->result_array();
     }
     
-    public function get_isActive_all() {
+    public function get_active_data($type=null) {
+        
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
+        $this->db->from('pos_customertype');
+        
+        if(isset($type)):
+            $this->db->where('type', $type);
+        endif;
         $this->db->where('isActive', 1);
+        $this->db->order_by("name", "asc");
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -35,7 +41,16 @@ class Supplier_model extends CI_Model {
     public function get_data_all($id) {
         //echo $username;
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
+        $this->db->from('pos_customertype');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function get_single_data($id) {
+        //echo $username;
+        $this->db->select('*');
+        $this->db->from('pos_customertype');
         $this->db->where('id', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -46,13 +61,13 @@ class Supplier_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            return $this->db->update('pos_suppliers', $data);
+            return $this->db->update('pos_customertype', $data);
         }else{
             $data=$post;
-            $data['supplier_code'] = 'S'.rand(1000,500000);
+            
             $this->db->set('created', 'NOW()', FALSE);
             $this->db->set('modified', 'NOW()', FALSE);
-            return $this->db->insert('pos_suppliers', $data);
+            return $this->db->insert('pos_customertype', $data);
         }
     }
     
@@ -61,7 +76,7 @@ class Supplier_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            return $this->db->update('pos_suppliers', $data);
+            return $this->db->update('pos_customertype', $data);
         }else{
             
         }
@@ -69,7 +84,7 @@ class Supplier_model extends CI_Model {
     
     public function delete_user($user_id=null) {
         $this->db->where('id', $user_id);
-        return $this->db->delete('pos_suppliers');
+        return $this->db->delete('pos_customertype');
     }
     
 }

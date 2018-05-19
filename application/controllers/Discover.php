@@ -20,6 +20,8 @@ class Discover extends CI_Controller {
         $this->load->model('products_model');
         $this->load->model('products_type');
         $this->load->model('company_type');
+        $this->load->model('customer_type');
+        $this->load->model('customers_model');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -75,7 +77,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['product_code'];
                 $rowData[5] = $value['supplier_code'];
                 $rowData[6] = $value['descriptions'];
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'   src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -139,7 +141,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['parent_id'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -189,7 +191,57 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['supplier_code'];
                 $rowData[5] = '';
                 $rowData[6] = $value['details'];
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'   src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+
+                //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
+                //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
+                
+                $x='<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
+                $x.='<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
+                
+
+                $rowData[8] = $x;
+                $rowData[9] = '';
+                $rowData[10] = $value['email'];
+                $rowData[11] = $value['phone'];
+                $rowData[12] = $value['address'];
+                
+                $data['aaData'][] = $rowData;
+                $serial++;
+            }/// end of while()
+        elseif ($this->input->post('page_category') == 'customers'):
+            $conditions = array();
+
+            if (isset($sSearch) && !empty($sSearch)):
+                $like = $sSearch;
+                $quizMasterTotal = $this->customers_model->get_all_data('', '', $like);
+                $quizQuestions = $this->customers_model->get_all_data($limit, $offset, $like);
+
+            else:
+                $quizMasterTotal = $this->customers_model->get_all_data();
+                $quizQuestions = $this->customers_model->get_all_data($limit, $offset);
+            endif;
+
+            $totalTotal = count($quizMasterTotal);
+            $total = count($quizQuestions);
+            $data['sEcho'] = intval($_POST['sEcho']);
+            $data['iTotalRecords'] = $total;
+            $data['iTotalDisplayRecords'] = $totalTotal;
+
+            $f = 0;
+            $serial = $_POST['iDisplayStart'] + 1;
+
+            foreach ($quizQuestions as $value) {
+
+                $rowData = array();
+                $rowData[0] = $value['id'];
+                $rowData[1] = $serial;
+                $rowData[2] = $value['name'];
+                $rowData[3] = $value['slug'];
+                $rowData[4] = $value['customer_code'];
+                $rowData[5] = '';
+                $rowData[6] = '';
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -239,7 +291,7 @@ class Discover extends CI_Controller {
                 $rowData[4] = $value['store_code'];
                 $rowData[5] = '';
                 $rowData[6] = '';
-                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+                $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
                 //$x .= "<img class='pDrop' src='" . base_url() . "assets/images/i_drop.png' />";
@@ -526,6 +578,34 @@ class Discover extends CI_Controller {
                 $data= 1;
                 echo $data;
                 die();
+            }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='customers') {
+                //$post['details']=$this->input->post('bodytxt');
+                
+                //$post['thumb_photo']=$this->input->post('sImage');
+                //$post['languages']='en';
+                $post['slug']=$this->input->post('slug');
+                
+                if ($this->input->post('id') !== null):
+                    $post['id'] = $this->input->post('id');
+                endif;
+                
+                $post['name'] = $this->input->post('name');
+                $post['pharmacy_name'] = $this->input->post('pharmacy_name');
+                $post['customer_type_id'] = $this->input->post('customer_type_id');
+                $post['slug'] = $this->input->post('slug');
+                $post['phone'] = $this->input->post('phone');
+                $post['address'] = $this->input->post('address');
+                $post['email'] = $this->input->post('email');
+                $post['remarks'] = $this->input->post('remarks');
+                $post['isActive'] = $this->input->post('isActive');
+                
+                //print_r($post);
+                //die();
+                $this->customers_model->addupdate_data($post);
+                
+                $data= 1;
+                echo $data;
+                die();
             }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='category') {
                 $post=array();
                 
@@ -570,6 +650,20 @@ class Discover extends CI_Controller {
                 $post['thumb_image'] = $this->input->post('thumbimage');
                 
                 $this->company_type->addupdate_data($post);
+                
+                $data= 1;
+                echo $data;
+                die();
+            }elseif ($this->input->post('category')!==null&&$this->input->post('category')=='customertype') {
+                $post=array();
+                
+                if ($this->input->post('id') !== null):
+                    $post['id'] = $this->input->post('id');
+                endif;
+                
+                $post['name'] = $this->input->post('name');
+                
+                $this->customer_type->addupdate_data($post);
                 
                 $data= 1;
                 echo $data;
@@ -655,12 +749,70 @@ class Discover extends CI_Controller {
             $formdata = $this->categories_model->get_data_all($this->input->post('contentid'));
         elseif($this->input->post('type')=='suppliers')
             $formdata = $this->supplier_model->get_data_all($this->input->post('contentid'));
+        elseif($this->input->post('type')=='customers')
+            $formdata = $this->customers_model->get_data_all($this->input->post('contentid'));
         else if($this->input->post('type')=='stores')
             $formdata = $this->stores_model->get_data_all($this->input->post('contentid'));
         if (count($formdata) > 0)
             $formdata = $formdata[0];
         $formdata['success'] = true;
         echo json_encode($formdata);
+    }
+    
+    public function setisactiveBrand() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            if($this->input->post('type')=='customertype'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->customer_type->setisactive_category($post);
+            elseif($this->input->post('type')=='products'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->products_model->setisactive_category($post);
+            elseif($this->input->post('type')=='customers'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->customers_model->setisactive_category($post);
+            elseif($this->input->post('type')=='suppliers'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->supplier_model->setisactive_category($post);
+            elseif($this->input->post('type')=='stores'):
+                $post['id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->stores_model->setisactive_category($post);
+            elseif($this->input->post('type')=='users'):
+                $post['user_id'] = $this->input->post('id');
+                $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
+                
+                $this->user_model->setisactive_category($post);
+            endif;
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
+    }
+    
+    public function deleteDiscover() {
+        $data = 0;
+        if (!empty($this->input->post())):
+            if($this->input->post('type')=='customertype'):
+                $this->customer_type->delete_user($this->input->post('id'));
+            elseif($this->input->post('type')=='customers'):
+                $this->customers_model->delete_user($this->input->post('id'));
+            endif;
+            $data = 1;
+        else:
+            $data = 0;
+        endif;
+        echo $data;
     }
     
     public function discoverDeleteProcessing() {
@@ -674,6 +826,9 @@ class Discover extends CI_Controller {
             $data= 1;
         elseif($this->input->post('type')=='suppliers'):
             $this->supplier_model->delete_user($this->input->post('id'));
+            $data= 1;
+        elseif($this->input->post('type')=='customers'):
+            $this->customers_model->delete_user($this->input->post('id'));
             $data= 1;
         else:
             $data= 0;

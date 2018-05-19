@@ -77,6 +77,17 @@ class Products_model extends CI_Model {
         }
     }
     
+    public function setisactive_category($post) {
+        if(isset($post['id'])&&!empty($post['id'])){
+            $data=$post;
+            $this->db->set('modified', 'NOW()', FALSE);
+            $this->db->where('id', $post['id']);
+            return $this->db->update('pos_products', $data);
+        }else{
+            
+        }
+    }
+    
     public function delete_user($user_id=null) {
         $this->db->where('id', $user_id);
         return $this->db->delete('pos_products');

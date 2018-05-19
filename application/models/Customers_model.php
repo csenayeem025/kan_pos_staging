@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Supplier_model extends CI_Model {
+class Customers_model extends CI_Model {
 
     public function __construct() {
 
@@ -12,7 +12,7 @@ class Supplier_model extends CI_Model {
     public function get_all_data($limit=null, $offset=null, $like=null) {
         
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
+        $this->db->from('pos_customers');
         if(isset($like)):
             $this->db->or_like('name', $like,'both');
             $this->db->or_like('email', $like,'both');
@@ -26,7 +26,7 @@ class Supplier_model extends CI_Model {
     
     public function get_isActive_all() {
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
+        $this->db->from('pos_customers');
         $this->db->where('isActive', 1);
         $query = $this->db->get();
         return $query->result_array();
@@ -35,7 +35,7 @@ class Supplier_model extends CI_Model {
     public function get_data_all($id) {
         //echo $username;
         $this->db->select('*');
-        $this->db->from('pos_suppliers');
+        $this->db->from('pos_customers');
         $this->db->where('id', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -46,13 +46,13 @@ class Supplier_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            return $this->db->update('pos_suppliers', $data);
+            return $this->db->update('pos_customers', $data);
         }else{
             $data=$post;
-            $data['supplier_code'] = 'S'.rand(1000,500000);
+            $data['customer_code'] = 'C'.rand(1000,500000);
             $this->db->set('created', 'NOW()', FALSE);
             $this->db->set('modified', 'NOW()', FALSE);
-            return $this->db->insert('pos_suppliers', $data);
+            return $this->db->insert('pos_customers', $data);
         }
     }
     
@@ -61,7 +61,7 @@ class Supplier_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            return $this->db->update('pos_suppliers', $data);
+            return $this->db->update('pos_customers', $data);
         }else{
             
         }
@@ -69,7 +69,7 @@ class Supplier_model extends CI_Model {
     
     public function delete_user($user_id=null) {
         $this->db->where('id', $user_id);
-        return $this->db->delete('pos_suppliers');
+        return $this->db->delete('pos_customers');
     }
     
 }

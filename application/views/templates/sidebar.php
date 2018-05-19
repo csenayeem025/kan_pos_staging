@@ -37,6 +37,7 @@
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdatecustomer">Add Customer</a></li>
                                             <li><a href="<?=base_url();?>admin/customers">Customer List</a></li>
+                                            <li><a href="<?=base_url();?>admin/customertype">Customer Types</a></li>
                                         </ul>
                                     </li>
                                     <li class="has-child-item close-item">

@@ -46,6 +46,18 @@ class User_model extends CI_Model {
             return $this->db->insert('pos_users', $data);
         }
     }
+    
+    public function setisactive_category($post) {
+        if(isset($post['user_id'])&&!empty($post['user_id'])){
+            $data=$post;
+            $this->db->set('modified', 'NOW()', FALSE);
+            $this->db->where('user_id', $post['user_id']);
+            return $this->db->update('pos_users', $data);
+        }else{
+            
+        }
+    }
+    
     public function delete_user($user_id=null) {
         $this->db->where('user_id', $user_id);
         return $this->db->delete('pos_users');

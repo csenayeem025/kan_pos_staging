@@ -643,6 +643,21 @@ $(function () {
             if(contentid){
                 onGetCurrentFormEditData(contentid);
             }
+            $('body').on('click', '.pIsActive', function () {
+                id = $(this).data('id');
+                isActive = $(this).data('isactive');
+                if (confirm("Do you really want to change Record?")) {
+                    $.ajax({
+                        url: baseUrl + 'discover/setisactiveBrand',
+                        type: 'post',
+                        data: {action: 'isactiveCategory', type: 'users', id: id, isactive: isActive},
+                        success: function (response) {
+                            alert('Successfully updated.');
+                            oTable.fnDraw();
+                        }
+                    });
+                }
+            });
             function onGetCurrentFormEditData(contentid) {
                 formType='';
                 if($('.isProductForm').length>0)
@@ -1730,6 +1745,21 @@ $(function () {
             if(contentid){
                 onGetCurrentFormEditData(contentid);
             }
+            $('body').on('click', '.pIsActive', function () {
+                id = $(this).data('id');
+                isActive = $(this).data('isactive');
+                if (confirm("Do you really want to change Record?")) {
+                    $.ajax({
+                        url: baseUrl + 'discover/setisactiveBrand',
+                        type: 'post',
+                        data: {action: 'isactiveCategory', type: $('#category').val(), id: id, isactive: isActive},
+                        success: function (response) {
+                            alert('Successfully updated.');
+                            oTable.fnDraw();
+                        }
+                    });
+                }
+            });
             function onGetCurrentFormEditData(contentid) {
                 formType='';
                 if($('.isProductForm').length>0)
@@ -1799,6 +1829,9 @@ $(function () {
                             $('#phone').val(response.phone);
                             $('#store_type').val(response.store_type);
                             $('#remarks').val(response.remarks);
+                            $('#pharmacy_name').val(response.pharmacy_name);
+                            $('#customer_type_id').val(response.customer_type_id);
+                            $('#customer_code').val(response.customer_code);
                             
                             localData = '';
                             if (response.thumb_photo) {

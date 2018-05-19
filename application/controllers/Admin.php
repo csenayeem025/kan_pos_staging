@@ -16,10 +16,13 @@ class Admin extends CI_Controller {
         $this->load->model('admin_model');
         $this->load->model('user_model');
         $this->load->model('supplier_model');
+        $this->load->model('stores_model');
         $this->load->model('categories_model');
         $this->load->model('products_model');
         $this->load->model('products_type');
         $this->load->model('company_type');
+        $this->load->model('customer_type');
+        $this->load->model('customers_model');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -206,6 +209,19 @@ class Admin extends CI_Controller {
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/customers', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+    
+    public function customertype() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Customer Type | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/customertype', $data);
         $this->load->view('templates/footer_admin', $data);
     }
 
@@ -628,7 +644,7 @@ class Admin extends CI_Controller {
             $rowData[3] = $value['email'];
             $rowData[4] = $value['user_type'];
             $rowData[5] = '';
-            $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive'  src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
+            $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['user_id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['user_id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
             $x = '<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
             if ($value['user_type'] != 'Admin')
@@ -761,6 +777,15 @@ class Admin extends CI_Controller {
         echo json_encode($data);
     }
     
+    public function getCustomerTypeSingle($id = null) {
+        $id = $this->input->post('id');
+        $data = $this->customer_type->get_single_data($id);
+        if (count($data) > 0)
+            $data = $data[0];
+        $data['success'] = true;
+        echo json_encode($data);
+    }
+    
     public function getProductTypeSingle($id = null) {
         $id = $this->input->post('id');
         $data = $this->products_type->get_single_data($id);
@@ -803,6 +828,14 @@ class Admin extends CI_Controller {
         echo json_encode($data);
     }
     
+    public function getCustomerTypeTableUPdate($parent_id = null, $type = null) {
+        //$type = $this->input->post('type');
+        
+        $data = array();
+        $data = $this->customer_type->get_all_data();
+        echo json_encode($data);
+    }
+    
     public function getProducttypes($parent_id = null, $type = null) {
         $type = $this->input->post('type');
         
@@ -818,13 +851,21 @@ class Admin extends CI_Controller {
         $data = $this->company_type->get_active_data($type);
         echo json_encode($data);
     }
+    
+    public function getCustomerType($parent_id = null, $type = null) {
+        //$type = $this->input->post('type');
+        
+        $data = array();
+        $data = $this->customer_type->get_active_data();
+        echo json_encode($data);
+    }
 
     public function setisactiveBrand() {
         $data = 0;
         if (!empty($this->input->post())):
             $post['id'] = $this->input->post('id');
             $post['isActive'] = $this->input->post('isactive') == 1 ? 0 : 1;
-            print_r($post);
+            //print_r($post);
             $this->company_type->setisactive_category($post);
             $data = 1;
         else:

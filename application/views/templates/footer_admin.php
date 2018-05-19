@@ -87,6 +87,9 @@
         width: 100%;
         padding-bottom: 0;
     }
+    .pIsActive{
+        cursor:pointer;
+    }
 </style> 
 </body>
 </html>
