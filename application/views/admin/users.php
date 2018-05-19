@@ -35,7 +35,7 @@
                                     <th>Email</th>
                                     <th>User Type</th>                                    
                                     <th>Package Type</th>                                    
-                                    <th>Is Active</th>
+                                    <th>Active</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

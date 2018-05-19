@@ -37,7 +37,7 @@
                                     <th>Customer Code</th>  
                                     <th></th>
                                     <th></th>
-                                    <th>Is Active</th>
+                                    <th>Active</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
