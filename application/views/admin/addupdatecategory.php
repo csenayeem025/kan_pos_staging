@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/icheck/skins/all.css">
 <script src="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/icheck/skins/all.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/jquery-ui.min.css">
+<script src="<?= base_url() ?>assets/js/jquery-ui/jquery-ui.min.js"></script>
 <div class="content">
     <!-- content HEADER -->
     <!-- ========================================================= -->
@@ -37,17 +39,18 @@
                                 <div class="form-group col-md-12">
                                     <label class="col-lg-2 control-label">Main Category (<span class="red">*</span>):</label>
                                     <div class="col-lg-10">
-                                        <select name="parent_id" multiple='multiple' id="currentCategory" data-validation-error-msg="Please give your category" class="form-control">
+                                        <select id="currentCategory" name="parent_id" class="form-control"></select>
+<!--                                        <select name="parent_id" multiple='multiple' id="currentCategory" data-validation-error-msg="Please give your category" class="form-control">
                                             <optgroup label="Default"></optgroup>
-                                            <?php if (isset($categories) && !empty($categories)): ?>
-                                                <?php foreach ($categories as $key => $val): ?>
-                                                    <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                        <option><?php echo $val['name']; ?></option>
-                                                    </optgroup>
-                                                <?php endforeach; ?>
-                                            <?php endif; ?>
+                                        <?php if (isset($categories) && !empty($categories)): ?>
+                                            <?php foreach ($categories as $key => $val): ?>
+                                                                                            <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                                                                <option><?php echo $val['name']; ?></option>
+                                                                                            </optgroup>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
 
-                                        </select>
+                                        </select>-->
                                     </div>
                                 </div> 
                                 <div class="form-group col-md-6" style="display:none;">
@@ -58,7 +61,7 @@
                                         </select>
                                     </div>
                                 </div> 
-                                
+
                                 <div class="form-group col-md-12" style="display: none;">
                                     <label class="col-lg-4 control-label">Category URL (<span class="red">*</span>):</label>
                                     <div class="col-lg-8">
@@ -68,7 +71,7 @@
                                 <div class="form-group col-md-12" style="clear: both;">
                                     <label class="col-lg-2 control-label">Descriptions</label>
                                     <div class="col-lg-10">
-                                    <textarea class="form-control "  id="remarks" name="remarks" rows="6"></textarea>
+                                        <textarea class="form-control "  id="remarks" name="remarks" rows="6"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group" style="display: none">
@@ -188,23 +191,21 @@
     }
 </style>
 <script type="text/javascript">
-    var contentid = '<?php echo (isset($_GET['contentid']) && !empty($_GET['contentid'])) ? $_GET['contentid'] : '' ?>';
-</script>
+    var contentid = '<?php echo (isset($_GET['contentid']) && !empty($_GET['contentid'])) ? $_GET['contentid'] : '' ?>';</script>
 <script type="text/javascript">
     function onModalAlert(str) {
-                $('#myModal .modal-body').html(str);
-                $('#myModal').modal('show');
-            }
+        $('#myModal .modal-body').html(str);
+        $('#myModal').modal('show');
+    }
+    var availableTags = new Array();
     $(document).ready(function () {
         if ($('#admin_category').length > 0) {
-            
+
 
             $('body').on('click', '.my_cat_table tr', function () {
                 id = $(this).data('id');
                 //onGetCategory(id);
             });
-            
-            
             function initUpload_audio(localData) {
 
                 if (localData == 1)
@@ -213,9 +214,7 @@
                     str = 'Upload Background';
                 else
                     str = 'Upload Feature Image';
-
                 allowedType = 'jpg,png,gif,jpeg';
-
                 var settings = "settings_" + localData;
                 settings = {
                     url: baseUrl + 'admin/fileupload?action=featurefileupload',
@@ -238,11 +237,9 @@
 
                             $('.bgimage .sImage').attr('src', baseUrl + response.imgurl);
                             $('.bgimage').val(response.imgurl);
-
                             onModalAlert('Successully uploaded.');
                         } else {
                             onModalAlert(response.error);
-
                         }
                     },
                     afterUploadAll: function ()
@@ -266,9 +263,7 @@
                     str = 'Upload File';
                 else
                     str = 'Upload Icon';
-
                 allowedType = 'jpg,png,gif,jpeg,ico';
-
                 var settings = "settings_" + localData;
                 settings = {
                     url: baseUrl + 'admin/fileupload?action=featurefileupload',
@@ -289,11 +284,9 @@
                         if (response.status == 1) {
                             $('.iconimage .sImage_icon').attr('src', baseUrl + response.imgurl);
                             $('.iconimage').val(response.imgurl);
-
                             onModalAlert('Successully uploaded.');
                         } else {
                             onModalAlert(response.error);
-
                         }
                     },
                     afterUploadAll: function ()
@@ -322,7 +315,7 @@
                         var zNodes = jQuery.parseJSON(response);
                         //console.log(zNodes);
                         html = '<option value="0">Default</option>';
-
+                        availableTags[0]='Default';
                         if (zNodes.length > 0) {
                             for (i = 0, j = 2; i < zNodes.length; i++, j++) {
                                 //ids=zNodes[i]['idlist'].split(',');
@@ -336,7 +329,7 @@
                                 html += '<option value="' + zNodes[i]['id'] + '">' + zNodes[i]['name'] + '</option>';
                                 //}
                                 //html += '<optgroup>'; 
-
+                                availableTags[zNodes[i]['id']] =  zNodes[i]['name'];
                             }
                             //alert(html);
                             $('#currentCategory').html(html);
@@ -344,36 +337,175 @@
                             html = '<option value="0">Default</option>';
                             $('#currentCategory').html(html);
                         }
+                        //alert(availableTags);
+//                        $("#currentCategory").autocomplete({
+//                            source: availableTags
+//                        });
+                        $("#currentCategory").combobox();
                     }
                 });
             }
             onCategoryUPdate();
-            
 
-           
-            
-            
+
+            $.widget("custom.combobox", {
+                _create: function () {
+                    this.wrapper = $("<span>")
+                            .addClass("custom-combobox")
+                            .insertAfter(this.element);
+                    this.element.hide();
+                    this._createAutocomplete();
+                    this._createShowAllButton();
+                },
+                _createAutocomplete: function () {
+                    var selected = this.element.children(":selected"),
+                            value = selected.val() ? selected.text() : "";
+                    this.input = $("<input>")
+                            .appendTo(this.wrapper)
+                            .val(value)
+                            .attr("title", "")
+                            .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
+                            .autocomplete({
+                                delay: 0,
+                                minLength: 0,
+                                source: $.proxy(this, "_source")
+                            })
+                            .tooltip({
+                                classes: {
+                                    "ui-tooltip": "ui-state-highlight"
+                                }
+                            });
+                    this._on(this.input, {
+                        autocompleteselect: function (event, ui) {
+                            ui.item.option.selected = true;
+                            this._trigger("select", event, {
+                                item: ui.item.option
+                            });
+                        },
+                        autocompletechange: "_removeIfInvalid"
+                    });
+                },
+                _createShowAllButton: function () {
+                    var input = this.input,
+                            wasOpen = false;
+                    $("<a>")
+                            .attr("tabIndex", -1)
+                            .attr("title", "Show All Items")
+                            .tooltip()
+                            .appendTo(this.wrapper)
+                            .button({
+                                icons: {
+                                    primary: "ui-icon-triangle-1-s"
+                                },
+                                text: false
+                            })
+                            .removeClass("ui-corner-all")
+                            .addClass("custom-combobox-toggle ui-corner-right")
+                            .on("mousedown", function () {
+                                wasOpen = input.autocomplete("widget").is(":visible");
+                            })
+                            .on("click", function () {
+                                input.trigger("focus");
+                                // Close if already visible
+                                if (wasOpen) {
+                                    return;
+                                }
+
+                                // Pass empty string as value to search for, displaying all results
+                                input.autocomplete("search", "");
+                            });
+                },
+                _source: function (request, response) {
+                    var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                    response(this.element.children("option").map(function () {
+                        var text = $(this).text();
+                        if (this.value && (!request.term || matcher.test(text)))
+                            return {
+                                label: text,
+                                value: text,
+                                option: this
+                            };
+                    }));
+                },
+                _removeIfInvalid: function (event, ui) {
+
+                    // Selected an item, nothing to do
+                    if (ui.item) {
+                        return;
+                    }
+
+                    // Search for a match (case-insensitive)
+                    var value = this.input.val(),
+                            valueLowerCase = value.toLowerCase(),
+                            valid = false;
+                    this.element.children("option").each(function () {
+                        if ($(this).text().toLowerCase() === valueLowerCase) {
+                            this.selected = valid = true;
+                            return false;
+                        }
+                    });
+                    // Found a match, nothing to do
+                    if (valid) {
+                        return;
+                    }
+
+                    // Remove invalid value
+                    this.input
+                            .val("")
+                            .attr("title", value + " didn't match any item")
+                            .tooltip("open");
+                    this.element.val("");
+                    this._delay(function () {
+                        this.input.tooltip("close").attr("title", "");
+                    }, 2500);
+                    this.input.autocomplete("instance").term = "";
+                },
+                _destroy: function () {
+                    this.wrapper.remove();
+                    this.element.show();
+                },
+                autocomplete : function(value) {
+                    this.element.val(value);
+                    this.input.val(value);
+                }
+            });
+            //$("#combobox").combobox();
+
         }
-
-
-
-
     });
-
-</SCRIPT>
+</script>
 <script>
     $(function () {
-        $('#currentCategory').select2({
-            //dataAdapter: OptgroupData,
-            // resultsAdapter: OptgroupResults,
-            closeOnSelect: true,
-            //maximumSelectionSize: 1,
-            multiple: false,
-            placeholder: "Category Search"
-        });
+        //        $('#currentCategory').select2({
+        //            //dataAdapter: OptgroupData,
+        //            // resultsAdapter: OptgroupResults,
+        //            closeOnSelect: true,
+        //            //maximumSelectionSize: 1,
+        //            multiple: false,
+        //            placeholder: "Category Search"
+        //        });
+
+
 
     });
 </script>
+  <style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  </style>
 <style type="text/css">
     .isEnable, .isDelete{
         cursor:pointer;

@@ -1806,10 +1806,14 @@ $(function () {
                             } else {
                                 //document.getElementById('body').value = response.details;
                             }
-                            $('body').animate({opacity:1},1200,function(){
-                                //alert(response.parent_id);
-                                if(response.parent_id)
-                                    $('#currentCategory').val(response.parent_id).trigger('change');
+                            
+                            $('body').animate({opacity:1},100,function(){
+                                //alert(availableTags[response.parent_id]);
+                                if(response.parent_id){
+                                    //$('#currentCategory').combobox('autocomplete', response.parent_id);
+                                    $('#currentCategory').combobox('autocomplete', availableTags[response.parent_id]);
+                                    $('#currentCategory').val(response.parent_id);
+                                }
                             });
                             if (response.thumb_image){
                                         $('.thumbimage .sImage').attr('src', baseUrl + response.thumb_image);
