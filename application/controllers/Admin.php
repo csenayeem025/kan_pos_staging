@@ -206,6 +206,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Services | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_customers'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/customers', $data);
@@ -219,6 +220,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Customer Type | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_customers'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/customertype', $data);
@@ -232,6 +234,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_customers'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdatecustomer', $data);
@@ -245,6 +248,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Services | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_stores'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/stores', $data);
@@ -258,6 +262,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_stores'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdatestore', $data);
@@ -271,6 +276,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Suppliers | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_suppliers'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/suppliers', $data);
@@ -284,6 +290,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_suppliers'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdatesupplier', $data);
@@ -297,12 +304,41 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Products | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_products'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/products', $data);
         $this->load->view('templates/footer_admin', $data);
     }
 
+    public function purchases() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Purchase | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_purchases'] = true;
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/purchases', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+    
+    public function addupdatepurchase() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_purchases'] = true;
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/addupdatepurchase', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
+    
     public function addupdateproduct() {
 
         $this->onLogCheck();
@@ -310,6 +346,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Add/Update | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_products'] = true;
         $data['edit'] = -1;
 
         if (isset($_GET['contentid']) && !empty($_GET['contentid'])):
@@ -458,6 +495,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Users | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_users'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/users', $data);
@@ -471,6 +509,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Add/Update |  ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_users'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/addupdateuser', $data);
@@ -641,9 +680,10 @@ class Admin extends CI_Controller {
             $rowData[0] = $value['user_id'];
             $rowData[1] = $serial;
             $rowData[2] = $value['username'];
-            $rowData[3] = $value['email'];
-            $rowData[4] = $value['user_type'];
-            $rowData[5] = '';
+            $rowData[3] = $value['phone'];
+            $rowData[4] = $value['email'];
+            $rowData[5] = $value['user_type'];
+            $rowData[8] = '';
             $rowData[6] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['user_id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['user_id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
             $x = '<button class="btn btn-primary btn-sm pEdit"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;';
@@ -651,8 +691,8 @@ class Admin extends CI_Controller {
                 $x .= '<button class="btn btn-danger btn-sm pDrop"><i class="fa fa-trash"></i> Delete</button>';
 
             $rowData[7] = $x;
-            $rowData[8] = $value['full_name'];
-            $rowData[9] = $value['phone'];
+            $rowData[9] = $value['full_name'];
+            $rowData[10] = $value['phone'];
 
 
             $data['aaData'][] = $rowData;
@@ -729,6 +769,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Users | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_products'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/brands', $data);
@@ -742,6 +783,7 @@ class Admin extends CI_Controller {
         $settings = $this->admin_model->get_app_settings();
         $data['title'] = 'Users | ' . $settings[0]['sitename'];
         $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_products'] = true;
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('admin/category', $data);

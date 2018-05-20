@@ -34,10 +34,10 @@
                                     <th>Serial Id</th>
                                     <th>SL#</th>
                                     <th>Warehouse Name</th>
-                                    <th></th>
+                                    <th>Type</th>
                                     <th>Warehouse Code</th>  
-                                    <th></th>
-                                    <th></th>
+                                    <th>Contact No</th>
+                                    <th>Email Address</th>
                                     <th>Active</th>
                                     <th>Action</th>
                                 </tr>

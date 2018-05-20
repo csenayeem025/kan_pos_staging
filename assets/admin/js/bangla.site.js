@@ -838,7 +838,7 @@ $(function () {
                     }, {
                         "sClass": ""
                     }, {
-                        "bVisible": false
+                        "bVisible": true
 
                     }, {
                         "sClass": ""
@@ -2027,14 +2027,14 @@ $(function () {
                         }, {
                             "sClass": ""
                         }, {
-                            "bVisible": false
+                            "bVisible": true
                         }, {
                             "sClass": ""
                         }, {
-                            "bVisible": false
+                            "bVisible": true
 
                         }, {
-                            "bVisible": false
+                            "bVisible": true
 
                         }, {
                             "sClass": ""

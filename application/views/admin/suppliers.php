@@ -36,8 +36,8 @@
                                     <th>Supplier Name</th>
                                     <th></th>
                                     <th>Supplier Code</th>  
-                                    <th></th>
-                                    <th></th>
+                                    <th>Contact No</th>
+                                    <th>Email Address</th>
                                     <th>Active</th>
                                     <th>Action</th>
                                 </tr>

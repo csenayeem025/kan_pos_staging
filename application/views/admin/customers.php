@@ -35,8 +35,8 @@
                                     <th>Customer Name</th>
                                     <th></th>
                                     <th>Customer Code</th>  
-                                    <th></th>
-                                    <th></th>
+                                    <th>Contact No</th>
+                                    <th>Email Address</th>
                                     <th>Active</th>
                                     <th>Action</th>
                                 </tr>

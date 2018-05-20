@@ -73,10 +73,10 @@ class Discover extends CI_Controller {
                 $rowData[0] = $value['id'];
                 $rowData[1] = $serial;
                 $rowData[2] = $value['name'];
-                $rowData[3] = $value['slug'];
-                $rowData[4] = $value['product_code'];
-                $rowData[5] = $value['supplier_code'];
-                $rowData[6] = $value['descriptions'];
+                $rowData[3] = $value['product_code'];
+                $rowData[4] = $value['supplier_code'];
+                $rowData[5] = $value['trade_price'];
+                $rowData[6] = '<img src="'.base_url() .$value['thumb_photo'].'" width="80px" />';
                 $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
@@ -187,10 +187,11 @@ class Discover extends CI_Controller {
                 $rowData[0] = $value['id'];
                 $rowData[1] = $serial;
                 $rowData[2] = $value['name'];
-                $rowData[3] = $value['slug'];
+                $rowData[3] = '';
                 $rowData[4] = $value['supplier_code'];
-                $rowData[5] = '';
-                $rowData[6] = $value['details'];
+                $rowData[5] = $value['phone'];
+                $rowData[6] =$value['email'];
+                $rowData[9] = $value['details'];
                 $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
@@ -237,10 +238,10 @@ class Discover extends CI_Controller {
                 $rowData[0] = $value['id'];
                 $rowData[1] = $serial;
                 $rowData[2] = $value['name'];
-                $rowData[3] = $value['slug'];
+                $rowData[3] = '';
                 $rowData[4] = $value['customer_code'];
-                $rowData[5] = '';
-                $rowData[6] = '';
+                $rowData[5] = $value['phone'];
+                $rowData[6] =$value['email'];
                 $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
@@ -282,15 +283,17 @@ class Discover extends CI_Controller {
             $serial = $_POST['iDisplayStart'] + 1;
 
             foreach ($quizQuestions as $value) {
-
+                
+                //$storetype=$this->stores_model->get_all_data($value['store_type']);
+                
                 $rowData = array();
                 $rowData[0] = $value['id'];
                 $rowData[1] = $serial;
                 $rowData[2] = $value['name'];
-                $rowData[3] = $value['slug'];
+                $rowData[3] = $value['store_type'];
                 $rowData[4] = $value['store_code'];
-                $rowData[5] = '';
-                $rowData[6] = '';
+                $rowData[5] = $value['phone'];
+                $rowData[6] = $value['email'];
                 $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
 
                 //$x = "<img class='pEdit' src='" . base_url() . "assets/images/i_edit.png' />";
@@ -309,7 +312,7 @@ class Discover extends CI_Controller {
                 $data['aaData'][] = $rowData;
                 $serial++;
             }/// end of while()
-        elseif ($this->request->data['page_category'] == 'banners'):
+        elseif ($this->input->post('page_category') == 'banners'):
             if (isset($sSearch) && !empty($sSearch)):
                 $conditions['or'][] = array('MusicBanners.title LIKE' => "%$sSearch%");
                 $conditions['and'][] = array('MusicBanners.category ' => $this->request->data['page_category']);
@@ -358,7 +361,7 @@ class Discover extends CI_Controller {
                 $data['aaData'][] = $rowData;
                 $serial++;
             }/// end of while()
-        elseif ($this->request->data['page_category'] == 'languages'):
+        elseif ($this->input->post('page_category') == 'languages'):
             if (isset($sSearch) && !empty($sSearch)):
                 $conditions['or'][] = array('BanglaLanguages.name LIKE' => "%$sSearch%");
                 $conditions['and'][] = array('BanglaLanguages.category ' => $this->request->data['page_category']);

@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/icheck/skins/all.css">
+<script src="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
 <div class="content">
     <!-- content HEADER -->
     <!-- ========================================================= -->
@@ -7,19 +9,19 @@
         <div class="leftside-content-header">
             <ul class="breadcrumbs">
                 <li><i class="fa fa-table" aria-hidden="true"></i><a href="<?php echo base_url(); ?>admin/banglaadmin">Dashboard</a></li>
-                <li><a>Users</a></li>
+                <li><a>Purchase</a></li>
             </ul>
         </div>
     </div>
     <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
     <!--SEARCHING, ORDENING & PAGING-->
-    <div class="row animated fadeInRight"  id="admin_users">
+    <div class="row animated fadeInRight"  id="discover">
         
         <div class="col-sm-12">
             <?php if(isset($_SESSION['MusicUsers_user_type']) && !empty($_SESSION['MusicUsers_user_type'])&& $_SESSION['MusicUsers_user_type']=='Admin'): ?>
         <div class="row">
             <div class="col-xs-12" style="margin-bottom: 10px;">
-                <a href="<?php base_url();?>addupdateuser" class="btn btn-info pull-left btn-add---">Add User</a>
+                <a href="<?php base_url();?>addupdatepurchase" class="btn btn-info pull-left btn-add---">Add Purchase</a>
             </div>
         </div>
         <?php endif;?>
@@ -31,10 +33,11 @@
                                 <tr>
                                     <th>Serial Id</th>
                                     <th>SL#</th>
-                                    <th>Username</th>
-                                    <th>Contact No</th>
-                                    <th>Email Address</th>
-                                    <th>User Type</th>                                  
+                                    <th>Invoice</th>
+                                    <th></th>
+                                    <th>Code</th>  
+                                    <th></th>
+                                    <th></th>
                                     <th>Active</th>
                                     <th>Action</th>
                                 </tr>
@@ -42,7 +45,13 @@
                             <tbody>
                             </tbody>
                         </table>
-                        <input type="hidden" id="users" name="addupdateuser" value="addupdateuser" />
+                        <div class="form-group" style="display: none">
+                            <label class="col-lg-3 control-label">Category:</label>
+                            <div class="col-lg-7">
+                                <input id="category" name="category" value="purchases" class="form-control " type="text" >
+                            </div>
+                        </div> 
+                        <input type="hidden" id="purchases" name="addupdatepurchase" value="addupdatepurchase" />
                     </div>
                 </div>
             </div>

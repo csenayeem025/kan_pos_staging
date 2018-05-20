@@ -34,10 +34,10 @@
                                     <th>Serial Id</th>
                                     <th>SL#</th>
                                     <th>Product Name</th>
-                                    <th></th>
+                                    <th>Product Code</th>
                                     <th>Supplier Code</th>  
-                                    <th></th>
-                                    <th></th>
+                                    <th>Purchase Price</th>
+                                    <th>Image</th>
                                     <th>Active</th>
                                     <th>Action</th>
                                 </tr>
