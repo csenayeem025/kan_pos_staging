@@ -23,6 +23,7 @@ class Admin extends CI_Controller {
         $this->load->model('company_type');
         $this->load->model('customer_type');
         $this->load->model('customers_model');
+        $this->load->model('userloghistory_model');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -102,7 +103,9 @@ class Admin extends CI_Controller {
           $this->session->unset_userdata('MusicUsers_user_type');
           $this->session->unset_userdata('MusicUsers_email');
           $this->session->unset_userdata('MusicUsers_sImage'); */
-
+        $message = $this->userloghistory_model->updateData($this->session->userdata('MusicUsers_user_id'),null,$this->session->userdata('MusicUsers_token'));
+        
+        //die();
         $this->session->sess_destroy();
         redirect('/admin/banglalogin');
     }
@@ -141,6 +144,10 @@ class Admin extends CI_Controller {
                     $this->session->set_userdata('MusicUsers_user_type', $users['user_type']);
                     $this->session->set_userdata('MusicUsers_email', $users['email']);
                     $this->session->set_userdata('MusicUsers_sImage', $users['sImage']);
+                    
+                    $log_token=$this->generateToken();
+                    $message = $this->userloghistory_model->updateData($users['user_id'], $users, $log_token);
+                    $this->session->set_userdata('MusicUsers_token', $log_token);
                 } else {
                     $data['success'] = false;
                     $data['msg'] = 'Wrong password, please try again.';
@@ -501,6 +508,20 @@ class Admin extends CI_Controller {
         $this->load->view('admin/users', $data);
         $this->load->view('templates/footer_admin', $data);
     }
+    
+    public function usersloghistory() {
+
+        $this->onLogCheck();
+
+        $settings = $this->admin_model->get_app_settings();
+        $data['title'] = 'Users Log History | ' . $settings[0]['sitename'];
+        $data['favicon'] = $settings[0]['favicon'];
+        $data['menu_users'] = true;
+        $this->load->view('templates/header_admin', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('admin/usersloghistory', $data);
+        $this->load->view('templates/footer_admin', $data);
+    }
 
     public function addupdateuser() {
 
@@ -693,6 +714,66 @@ class Admin extends CI_Controller {
             $rowData[7] = $x;
             $rowData[9] = $value['full_name'];
             $rowData[10] = $value['phone'];
+
+
+            $data['aaData'][] = $rowData;
+            $serial++;
+        }/// end of while()
+        if ($total == 0)
+            $data['aaData'] = array();
+        echo json_encode($data);
+    }
+    
+    public function userHistoryProcessing($action = null) {
+        $data = array();
+
+        $sSearch = $_POST['sSearch'];
+        $limit = $_POST['iDisplayLength'];
+        $offset = $_POST['iDisplayStart'];
+
+        $conditions = array();
+
+        if (isset($sSearch) && !empty($sSearch)):
+            $like = $sSearch;
+            $quizMasterTotal = $this->userloghistory_model->get_all_data('', '', $like);
+            $quizQuestions = $this->userloghistory_model->get_all_data($limit, $offset, $like);
+
+        else:
+            $quizMasterTotal = $this->userloghistory_model->get_all_data();
+            $quizQuestions = $this->userloghistory_model->get_all_data($limit, $offset);
+        endif;
+
+        $totalTotal = count($quizMasterTotal);
+        $total = count($quizQuestions);
+        $data['sEcho'] = intval($_POST['sEcho']);
+        $data['iTotalRecords'] = $total;
+        $data['iTotalDisplayRecords'] = $totalTotal;
+
+        $f = 0;
+        $serial = $_POST['iDisplayStart'] + 1;
+
+        foreach ($quizQuestions as $value) {
+
+            $cat_name = $this->user_model->get_user_data_all($value['user_id']);
+            if (isset($cat_name[0]['username']) && !empty($cat_name[0]['username'])):
+                $value['username'] = $cat_name[0]['username'];
+            else:
+                $value['username'] = 'Not specified';
+            endif;
+
+            $rowData = array();
+            $rowData[0] = $value['user_id'];
+            $rowData[1] = $serial;
+            $rowData[2] = $value['username'];
+            $rowData[3] = $value['login'];
+            $rowData[4] = $value['logout'];
+            $rowData[5] = $value['remote_ip'];
+            $rowData[8] = '';
+            $rowData[6] = '';
+
+            $rowData[7] = '';
+            $rowData[9] = '';
+            $rowData[10] = '';
 
 
             $data['aaData'][] = $rowData;

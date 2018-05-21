@@ -701,6 +701,11 @@ $(function () {
                     }
                 });
             }
+            if($('.isHistory').length>0){
+                userlistUrl=baseUrl + "admin/userHistoryProcessing";
+            }else{
+                userlistUrl=baseUrl + "admin/userProcessing";
+            }
             oTable = $('#adminTable').dataTable({
                 "bFilter": true,
                 "bJQueryUI": true,
@@ -713,7 +718,7 @@ $(function () {
                 "sDom": '<"H"fir>t<"F"lp> ',
                 "sPaginationType": "full_numbers",
                 "sScrollX": "100%",
-                "sAjaxSource": baseUrl + "admin/userProcessing",
+                "sAjaxSource":userlistUrl ,
                 "aaSorting": [[2, 'desc']],
                 "oLanguage": {
                     "sLengthMenu": "Display _MENU_ Records",

@@ -70,6 +70,7 @@
                                         <ul class="nav child-nav level-1">
                                             <li><a href="<?=base_url();?>admin/addupdateuser">Add User </a></li>
                                             <li><a href="<?=base_url();?>admin/users">User List</a></li>
+                                            <li><a href="<?=base_url();?>admin/usersloghistory">User Log History</a></li>
                                         </ul>
                                     </li>
                                     <!--Settings-->
