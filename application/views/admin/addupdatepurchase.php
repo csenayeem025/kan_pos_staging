@@ -2,8 +2,9 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/icheck/skins/all.css">
 <script src="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin_resource/assets/global/plugins/icheck/skins/all.css">
-<script src="<?php echo base_url(); ?>assets/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://cdn.jsdelivr.net/gh/atatanasov/gijgo@1.8.0/dist/combined/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<!--<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/jquery-ui.min.css">
+<script src="<?= base_url() ?>assets/js/jquery-ui/jquery-ui.min.js"></script>-->
+<script src="<?= base_url() ?>assets/autocomplete/jquery.autocomplete.min.js"></script>
 <div class="content">
     <!-- content HEADER -->
     <!-- ========================================================= -->
@@ -30,17 +31,51 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <form id="currentAdminForm" class="form-horizontal" method="post" action="<?php echo base_url(); ?>saveUpdateAllDiscover">
-                                <div class="col-md-6">
-                                    <label for="name" class=" control-label">Product Name<span class="required">*</span></label>
-                                    <input type="text"  class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Product Name" id="name" name="name" placeholder="Product Name">
-                                </div>
-                                <div class="col-md-6" style="display: none;">
-                                    <label for="name" class=" control-label">Product URL<span class="required">*</span></label>
-                                    <input type="text"  class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Product Url" id="slug" name="slug" placeholder="Product Url">
-                                </div>
-                                
-                                
+<!--                                <select id="currentSupplier" name="currentSupplier" class="form-control">
 
+                                </select>-->
+                                <div class="col-md-4">
+                                    <label for="code" class=" control-label">Supplier Name</label>
+                                    <input type="text" name="currentSupplier" id="currentSupplier" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="code" class=" control-label">Brand/ Company</label>
+                                    <input type="text" name="currentBrands" id="currentBrands" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="code" class=" control-label">Product Code</label>
+                                    <input type="text" name="currentProductCode" id="currentProductCode" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="code" class=" control-label">Product Category</label>
+                                    <input type="text" name="productCategory" id="productCategory" class="form-control" />
+                                </div>
+                                <div class="col-md-12">
+                                   <br />
+                                    <button class="btn btn-info pull-right btn-form-generate" type="button">Generate</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="code" class=" control-label">Purchase Product List</label>
+                                    <div class="table-responsive">
+                                        <table id="purchaseTable" class="data-table1 table table-striped nowrap table-hover" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>SL#</th>
+                                                    <th>Product Name</th>
+                                                    <th>Expire Date</th>
+                                                    <th>Current Stock</th>
+                                                    <th>Quantity</th>
+                                                    <th>Discount</th> 
+                                                    <th>Trade Price</th>
+                                                    <th>Total</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>    
                                 <div class="col-md-12" style="display: none">
                                     <label class="col-lg-3 control-label">Category:</label>
                                     <div class="col-lg-7">
@@ -49,29 +84,17 @@
 
                                     </div>
                                 </div> 
-                                
+                                <div class="col-md-12">
+                                   <br />
+                                    <button class="btn btn-info pull-right btn-form-review" style="display:none" type="button">Review</button>
+                                </div>
 
-                                <div class="col-md-12" style="clear: both;">
 
-                                    <label for="name" class=" control-label">Is Active?<span class="required">*</span></label>
-                                    <label class="">
-                                        <div class="iradio_flat-green" style="position: relative;" aria-checked="false" aria-disabled="false"><input type="radio" checked="" class="flat-red" name="isActive" value="1" style="position: absolute; opacity: 0;"><ins title="Enable" class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>
-                                    </label>
-                                    <label class="">
-                                        <div class="iradio_flat-green" style="position: relative;" aria-checked="true" aria-disabled="false"><input type="radio" class="flat-red" name="isActive" value="0" style="position: absolute; opacity: 0;"><ins title="Disable" class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins></div>
-                                    </label>
-
-                                </div>   
                                 <div class="box-footer">                    
-                                    <input name="id" id="id" value="" class="hideme" />      
-                                    <input name="bodytxt" id="bodytxt" value="" class="hideme" /> 
-                                    <input name="cat_id" id="cat_id" value="" class="hideme" /> 
-                                    <input name="parent_cat_id" id="parent_cat_id" value="1" class="hideme" /> 
-                                    <input name="isAd" id="isAd" value="1" class="hideme" />
+                                    
                                     <input name="sImage" id="sImage" class="hideme" value="" />
                                     <input name="action" id="action" class="hideme" value="userSaveUpdate" />
-                                    <button class="btn btn-info pull-right btn-form-save" type="submit">Save</button>
-                                    <a href="<?php base_url(); ?>purchases" class="btn btn-default pull-right btn-form-cancel---" style="margin-right:10px;" type="submit">Cancel</a>
+
                                 </div>
                             </form>
                             <input type="hidden" id="purchases" />
@@ -127,103 +150,237 @@
     $(function () {
         $.fn.datepicker.defaults.format = "yyyy-mm-dd";
 
-        var tree = $('#tree').tree({
-            primaryKey: 'id',
-            uiLibrary: 'bootstrap',
-            checkboxes: true,
-            cascadeCheck: false,
-            dataSource:<?php echo $getCategoryCheckTree; ?>
-        });
-        var getCheckedNotesArray = new Array();
-        var edit =<?php echo $edit; ?>;
-        if (edit == 1) {
-            $('#cat_id').val('<?php echo $cat_id; ?>');
-            cat_id = '<?php echo $cat_id; ?>';
-            cat_id = cat_id.replace(/##/g, ',')
-            cat_id = cat_id.replace(/#/g, "");
-            getCheckedNotesArray = cat_id.split(",");
-            getCheckedNotesArray = $.map(cat_id.split(','), Number);
-        }
-        $('#tree input[type=checkbox]').on('click', function () {
-            var checkedIds = tree.getCheckedNodes();
-
-            node = $(this).closest("li").data('id');
-            if ($(this).prop("checked")) {
-                var i = getCheckedNotesArray.indexOf(node);
-                if (i != -1) {
-                    getCheckedNotesArray.splice(i, 1);
-                }
-                getCheckedNotesArray.push(node);
-            } else {
-                var i = getCheckedNotesArray.indexOf(node);
-                if (i != -1) {
-                    getCheckedNotesArray.splice(i, 1);
-                }
-            }
-
-            getCheckedNotesArray = getCheckedNotesArray.sort(function (a, b) {
-                return a - b
-            });// asending
-            console.log(getCheckedNotesArray);
-
-            var catidstr = '';
-            $.each(getCheckedNotesArray, function (key2, val2) {
-                catidstr += "#" + val2 + "#";
-            });
-            $('#cat_id').val(catidstr);
-            console.log(catidstr);
-            //console.log(checkedIds);
-        });
-        function getSuppliers() {
-            
+        var availableSuppliers = new Array();
+        function onGetSuppliers() {
             $.ajax({
                 url: baseUrl + 'admin/getSuppliers',
                 type: 'post',
-                data: { type: 'Product'},
+                data: {action: 'getSuppliers', type: 'Product'},
                 success: function (response) {
                     var zNodes = jQuery.parseJSON(response);
-                    console.log(zNodes);
+                    availableSuppliers[0] = {value: 'Select Supplier', data: 0};
                     if (zNodes.length > 0) {
-                        html = '<option value="S00000">No</option>';
-                        for (i = 0; i < zNodes.length; i++) {
-                            html+='<option value="' + zNodes[i]['supplier_code'] + '">' + zNodes[i]['name'] + '</option>';
-                            
+                        for (i = 0, j = 2; i < zNodes.length; i++, j++) {
+                            availableSuppliers[i + 1] = {value: zNodes[i]['name'], data: zNodes[i]['id']};
                         }
-                        $('#supplier_code').html(html);
-                        
-                    } else {
-                        $('#supplier_code').html('<option value="S00000">No</option>');
                     }
+                    $('#currentSupplier').autocomplete({
+                        lookup: availableSuppliers,
+                        onSelect: function (suggestion) {
+                            console.log(suggestion);
+                            //alert('You selected: ' + suggestion.value );
+                        }
+                    });
                 }
             });
         }
-        getSuppliers();
-        function onCategoryTableUPdate() {
-            
+        onGetSuppliers();
+        var availableCompanies = new Array();
+        function onGetCompanies() {
             $.ajax({
                 url: baseUrl + 'admin/getBrands',
                 type: 'post',
-                data: { type: 'Product'},
+                data: {action: 'getSuppliers', type: 'Product'},
                 success: function (response) {
                     var zNodes = jQuery.parseJSON(response);
-                    console.log(zNodes);
+                    availableCompanies[0] = {value: 'Select Brands', data: 0};
                     if (zNodes.length > 0) {
-                        html = '';
-                        for (i = 0; i < zNodes.length; i++) {
-                            html+='<option value="' + zNodes[i]['id'] + '">' + zNodes[i]['name'] + '</option>';
-                            
+                        for (i = 0, j = 2; i < zNodes.length; i++, j++) {
+                            availableCompanies[i + 1] = {value: zNodes[i]['name'], data: zNodes[i]['id']};
                         }
-                        $('#type_id').html(html);
-                        
-                    } else {
-                        $('#type_id').html('<option value="">No</option>');
                     }
+                    $('#currentBrands').autocomplete({
+                        lookup: availableCompanies,
+                        onSelect: function (suggestion) {
+                            console.log(suggestion);
+                            //alert('You selected: ' + suggestion.value );
+                        }
+                    });
                 }
             });
         }
-        onCategoryTableUPdate();
+        onGetCompanies();
+        var availableProducts = new Array();
+        function onGetProducts() {
+            $.ajax({
+                url: baseUrl + 'admin/getProducts',
+                type: 'post',
+                data: {action: 'getProducts', type: 'Product'},
+                success: function (response) {
+                    var zNodes = jQuery.parseJSON(response);
+                    availableProducts[0] = {value: 'Select Product', data: 0};
+                    if (zNodes.length > 0) {
+                        for (i = 0, j = 2; i < zNodes.length; i++, j++) {
+                            availableProducts[i + 1] = {value: zNodes[i]['name'], data: zNodes[i]['id']};
+                        }
+                    }
+                    $('#currentProductCode').autocomplete({
+                        lookup: availableProducts,
+                        onSelect: function (suggestion) {
+                            console.log(suggestion);
+                            //alert('You selected: ' + suggestion.value );
+                            //alert($('#currentSupplier').val());
+                        }
+                    });
+                }
+            });
+        }
+        onGetProducts();
+        var productsCategory = new Array();
+        function onGetProducts() {
+            $.ajax({
+                url: baseUrl + 'admin/getCategory',
+                type: 'post',
+                data: {action: 'getCategory', type: 'Product'},
+                success: function (response) {
+                    var zNodes = jQuery.parseJSON(response);
+                    productsCategory[0] = {value: 'Select Category', data: 0};
+                    if (zNodes.length > 0) {
+                        for (i = 0, j = 2; i < zNodes.length; i++, j++) {
+                            productsCategory[i + 1] = {value: zNodes[i]['name'], data: zNodes[i]['id']};
+                        }
+                    }
+                    $('#productCategory').autocomplete({
+                        lookup: productsCategory,
+                        onSelect: function (suggestion) {
+                            console.log(suggestion);
+                            //alert('You selected: ' + suggestion.value );
+                            //alert($('#currentSupplier').val());
+                        }
+                    });
+                }
+            });
+        }
+        onGetProducts();
+        function onChangeSelection() {
+            $('#currentSupplier').on('autocompletechange change', function (e) {
+                e.preventDefault();
+                //console.log('You selected: ' + this.value);
+                currentSupplier = this.value;
+                $.map(availableSuppliers, function (val, i) {
+                    if (currentSupplier == val.value)
+                        currentSupplier = val.data;
+                });
+                console.log('You selected: ' + currentSupplier);
+            }).change();
+            $('#currentBrands').on('autocompletechange change', function (e) {
+                e.preventDefault();
+                currentCompanies = this.value;
+                $.map(availableCompanies, function (val, i) {
+                    if (currentCompanies == val.value)
+                        currentCompanies = val.data;
+                });
+                console.log('You selected: ' + currentCompanies);
+            }).change();
+            $('#currentProductCode').on('autocompletechange change', function (e) {
+                e.preventDefault();
+                currentProductCode = this.value;
+                $.map(availableProducts, function (val, i) {
+                    if (currentProductCode == val.value)
+                        currentProductCode = val.data;
+                });
+                console.log('You selected: ' + currentProductCode);
+            }).change();
+            $('#productCategory').on('autocompletechange change', function (e) {
+                e.preventDefault();
+                productCategory = this.value;
+                $.map(productsCategory, function (val, i) {
+                    if (productCategory == val.value)
+                        productCategory = val.data;
+                });
+                console.log('You selected: ' + productCategory);
+            }).change();
+            // currentSupplier & currentProductCode
+            $.ajax({
+                url: baseUrl + 'admin/getPurchaseTable',
+                type: 'post',
+                data: {currentSupplier: currentSupplier, productCategory:productCategory,currentCompanies:currentCompanies, currentProductCode: currentProductCode},
+                success: function (response) {
+                    response = jQuery.parseJSON(response);
+                    html = '';
+                    if (response.length > 0) {
+                        for(i=0;i<response.length;i++){
+                            html+='<tr product_id="'+response[i]['master_id']+'">';
+                                html+='<td>'+(i+1)+'</td>';
+                                html+='<td>'+response[i]['master_p_name']+'</td>';
+                                html+='<td>'+response[i]['expire_date']+'</td>';
+                                html+='<td>'+response[i]['instock']+'</td>';
+                                html+='<td><input type="text" name="quantity[]" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td>'+response[i]['discount']+'</td>';
+                                html+='<td>'+response[i]['trade_price']+'</td>';
+                                html+='<td>0.00</td>';
+                                html+='<td></td>';
+                            html+='</tr>';
+                        }
+                        html+='<tr>';
+                                html+='<td>###</td>';
+                                html+='<td></td>';
+                                html+='<td></td>';
+                                html+='<td></td>';  
+                                html+='<td></td>';  
+                                //html+='<td></td>';  
+                                html+='<td colspan="2" align="right">Grand Total: </td>';
+                                html+='<td><input disabled type="text" name="grand_totalamount" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td></td>';
+                            html+='</tr>';
+                            html+='<tr>';
+                                html+='<td>###</td>';
+                                html+='<td></td>';
+                                html+='<td></td>';
+                                html+='<td></td>';  
+                                html+='<td></td>';  
+                                //html+='<td></td>';  
+                                html+='<td colspan="2" align="right">Discount: </td>';
+                                html+='<td><input type="text" name="total_discount" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td></td>';
+                            html+='</tr>';
+                            html+='<tr>';
+                                html+='<td>###</td>';
+                                html+='<td></td>';
+                                html+='<td></td>';
+                                html+='<td></td>';  
+                                html+='<td></td>';  
+                                //html+='<td></td>';  
+                                html+='<td colspan="2" align="right">Paid: </td>';
+                                html+='<td><input type="text" name="paid" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td></td>';
+                            html+='</tr>';
+                            html+='<tr>';
+                                html+='<td>###</td>';
+                                html+='<td></td>';
+                                html+='<td></td>';
+                                html+='<td></td>';  
+                                html+='<td></td>';  
+                                //html+='<td></td>';  
+                                html+='<td colspan="2" align="right">Due: </td>';
+                                html+='<td><input disabled type="text" name="due" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td></td>';
+                            html+='</tr>';
+                    }
+                    $('#purchaseTable tbody').html(html);
+                    
+                }
+            });
+        }
+        $('body').on('click', '.btn-form-generate', function () {
+            onChangeSelection();
+        });
+        $('body').on('keyup','.quantity',function(){
+            $('.btn-form-review').show();
+        });
     });
 </script>
+<style type="text/css">
+.btn-form-review{display:none}
+</style>
+<style type="text/css">
+    .autocomplete-suggestions { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
+    .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+    .autocomplete-no-suggestion { padding: 2px 5px;}
+    .autocomplete-selected { background: #F0F0F0; }
+    .autocomplete-suggestions strong { font-weight: bold; color: #000; }
+    .autocomplete-group { padding: 2px 5px; font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
+</style>
 
 
 

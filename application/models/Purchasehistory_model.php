@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Products_model extends CI_Model {
+class Purchasehistory_model extends CI_Model {
 
     public function __construct() {
 
@@ -12,7 +12,7 @@ class Products_model extends CI_Model {
     public function get_all_data($limit=null, $offset=null, $like=null) {
         
         $this->db->select('*');
-        $this->db->from('pos_products');
+        $this->db->from('pos_purchasehistory');
         if(isset($like)):
             $this->db->or_like('name', $like,'both');
             //$this->db->or_like('email', $like,'both');
@@ -24,34 +24,11 @@ class Products_model extends CI_Model {
         return $query->result_array();
     }
     
-    public function get_all_data_purchase($currentSupplier=null,$currentCompanies=null,$currentProductCode=null,$productCategory=null) {
-        
-        $this->db->select('*,p.id master_id,p.name master_p_name,p.supplier_code master_supplier_code,p.product_code master_product_code');
-        $this->db->from('pos_products p');
-        $this->db->join('pos_suppliers s', 's.supplier_code = p.supplier_code','left');
-        if(isset($currentSupplier)&&!empty($currentSupplier)):
-            $this->db->where('s.id', $currentSupplier);
-        endif;
-        if(isset($currentCompanies)&&!empty($currentCompanies)):
-            $this->db->where('p.company_id', $currentCompanies);
-        endif;
-        if(isset($currentProductCode)&&!empty($currentProductCode)):
-            $this->db->where('p.id', $currentProductCode);
-        endif;
-        if(isset($productCategory)&&!empty($productCategory)):
-            $this->db->or_like('p.cat_id', $productCategory,'both');
-        endif;
-        $this->db->order_by("p.name", "asc");
-        $this->db->limit(25, 0);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    
     public function get_data_all($id) {
         //echo $username;
         $this->db->select('*,p.id master_id,p.supplier_code master_supplier_code,p.product_code master_product_code');
-        $this->db->from('pos_products p');
-        $this->db->join('pos_productscar c', 'c.product_id = p.id','left');
+        $this->db->from('pos_purchasehistory p');
+        $this->db->join('pos_purchasehistorycar c', 'c.product_id = p.id','left');
         $this->db->where('p.id', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -60,7 +37,7 @@ class Products_model extends CI_Model {
     public function get_subdata_all($id) {
         //echo $username;
         $this->db->select('*');
-        $this->db->from('pos_productscar');
+        $this->db->from('pos_purchasehistorycar');
         $this->db->where('product_id', $id);
         $query = $this->db->get();
         return $query->result_array();
@@ -71,14 +48,14 @@ class Products_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            $this->db->update('pos_products', $data);
+            $this->db->update('pos_purchasehistory', $data);
             return $post['id'];
         }else{
             $data=$post;
             //$data['supplier_code'] = 'S'.rand(1000,500000);
             $this->db->set('created', 'NOW()', FALSE);
             $this->db->set('modified', 'NOW()', FALSE);
-            $this->db->insert('pos_products', $data);
+            $this->db->insert('pos_purchasehistory', $data);
             return $this->db->insert_id();
         }
     }
@@ -88,14 +65,14 @@ class Products_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            $this->db->update('pos_productscar', $data);
+            $this->db->update('pos_purchasehistorycar', $data);
             return $post['id'];
         }else{
             $data=$post;
             $data['supplier_code'] = 'S'.rand(1000,500000);
             $this->db->set('created', 'NOW()', FALSE);
             $this->db->set('modified', 'NOW()', FALSE);
-            $this->db->insert('pos_productscar', $data);
+            $this->db->insert('pos_purchasehistorycar', $data);
             return $this->db->insert_id();
         }
     }
@@ -105,7 +82,7 @@ class Products_model extends CI_Model {
             $data=$post;
             $this->db->set('modified', 'NOW()', FALSE);
             $this->db->where('id', $post['id']);
-            return $this->db->update('pos_products', $data);
+            return $this->db->update('pos_purchasehistory', $data);
         }else{
             
         }
@@ -113,7 +90,7 @@ class Products_model extends CI_Model {
     
     public function delete_user($user_id=null) {
         $this->db->where('id', $user_id);
-        return $this->db->delete('pos_products');
+        return $this->db->delete('pos_purchasehistory');
     }
     
 }

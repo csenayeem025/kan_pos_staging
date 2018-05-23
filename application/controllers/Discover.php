@@ -22,6 +22,8 @@ class Discover extends CI_Controller {
         $this->load->model('company_type');
         $this->load->model('customer_type');
         $this->load->model('customers_model');
+        $this->load->model('purchase_model');
+        $this->load->model('purchasehistory_model');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 

@@ -24,6 +24,8 @@ class Admin extends CI_Controller {
         $this->load->model('customer_type');
         $this->load->model('customers_model');
         $this->load->model('userloghistory_model');
+        $this->load->model('purchase_model');
+        $this->load->model('purchasehistory_model');
         $this->domain = ($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != 'localhost:8888') ? $_SERVER['HTTP_HOST'] : false;
     }
 
@@ -888,6 +890,23 @@ class Admin extends CI_Controller {
         $type = $this->input->post('type');
         $data = array();
         $data = $this->categories_model->get_all_data(0, $type);
+        echo json_encode($data);
+    }
+    
+    public function getProducts($parent_id = null, $type = null) {
+        $type = $this->input->post('type');
+        $data = array();
+        $data = $this->products_model->get_all_data();
+        echo json_encode($data);
+    }
+    
+    public function getPurchaseTable($parent_id = null, $type = null) {
+        $currentSupplier = $this->input->post('currentSupplier');
+        $currentCompanies = $this->input->post('currentCompanies');
+        $currentProductCode = $this->input->post('currentProductCode');
+        $productCategory = $this->input->post('productCategory');
+        $data = array();
+        $data = $this->products_model->get_all_data_purchase($currentSupplier,$currentCompanies,$currentProductCode,$productCategory);
         echo json_encode($data);
     }
 
