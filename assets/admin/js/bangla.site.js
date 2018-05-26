@@ -1802,7 +1802,7 @@ $(function () {
                                 
                                 
                                 $('#product_size ').val(response.product_size );
-                                $('#instock ').val(response.instock );
+                                $('#opening_stock').val(response.opening_stock ).prop('disabled', true);
                                 $('#short_quantity ').val(response.short_quantity );
                                 $('#tax ').val(response.tax );
                                 CKEDITOR.instances['body'].setData(response.descriptions);

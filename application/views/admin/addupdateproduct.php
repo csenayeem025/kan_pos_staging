@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ostock" class=" control-label">Opening Stock<span class="required">*</span></label>
-                                    <input type="text" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Opening Stock" id="instock" name="instock"  placeholder="Opening Stock">
+                                    <input type="text" class="form-control placeholder-no-fix" data-validation="required" data-validation-error-msg="Please give Opening Stock" id="opening_stock" name="opening_stock"  placeholder="Opening Stock">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ostock" class=" control-label">Expire Date<span class="required">*</span></label>

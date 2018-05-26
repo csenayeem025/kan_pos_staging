@@ -75,8 +75,8 @@ class Discover extends CI_Controller {
                 $rowData[0] = $value['id'];
                 $rowData[1] = $serial;
                 $rowData[2] = $value['name'];
-                $rowData[3] = $value['product_code'];
-                $rowData[4] = $value['supplier_code'];
+                $rowData[3] = $value['supplier_code'];
+                $rowData[4] = $value['instock'];
                 $rowData[5] = $value['trade_price'];
                 $rowData[6] = '<img src="'.base_url() .$value['thumb_photo'].'" width="80px" />';
                 $rowData[7] = ($value['isActive']==1)?"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."'  src='" . base_url() . "assets/images/active-btn.png?time=".time()."' />":"<img class='pIsActive' data-id='".$value['id']."' data-isactive='".$value['isActive']."' src='" . base_url() . "assets/images/inactive-btn.png?time=".time()."' />";
@@ -504,6 +504,7 @@ class Discover extends CI_Controller {
                 endif;
                 if(isset($post['id'])&&empty($post['id'])):
                     $post['product_code'] = 'P'.rand(9000,99999);
+                    $post['instock'] = $this->input->post('opening_stock');
                 endif;
                 
                 $post['name'] = $this->input->post('name');
@@ -520,7 +521,7 @@ class Discover extends CI_Controller {
                 
                 $post['product_size'] = $this->input->post('product_size');
                 $post['short_quantity'] = $this->input->post('short_quantity');
-                $post['instock'] = $this->input->post('instock');
+                $post['opening_stock'] = $this->input->post('opening_stock');
                 $post['tax'] = $this->input->post('tax');
                 $post['date'] = date('Y-m-d',time());
                 //$post['discount'] = $this->input->post('discount');

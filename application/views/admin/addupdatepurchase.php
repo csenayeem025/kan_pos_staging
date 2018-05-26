@@ -300,15 +300,16 @@
                     html = '';
                     if (response.length > 0) {
                         for(i=0;i<response.length;i++){
-                            html+='<tr product_id="'+response[i]['master_id']+'">';
+                            //response[i]['discount']=9;
+                            html+='<tr product_id="'+response[i]['master_id']+'" trade_price="'+response[i]['trade_price']+'" discount="'+response[i]['discount']+'" instock="'+response[i]['instock']+'">';
                                 html+='<td>'+(i+1)+'</td>';
                                 html+='<td>'+response[i]['master_p_name']+'</td>';
                                 html+='<td>'+response[i]['expire_date']+'</td>';
                                 html+='<td>'+response[i]['instock']+'</td>';
-                                html+='<td><input type="text" name="quantity[]" class="form-control quantity" placeholder="0.00" /></td>';
-                                html+='<td>'+response[i]['discount']+'</td>';
+                                html+='<td><input type="number" name="quantity[]" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td><span class="single_discount ">'+response[i]['discount']+'</span></td>';
                                 html+='<td>'+response[i]['trade_price']+'</td>';
-                                html+='<td>0.00</td>';
+                                html+='<td><span class="single_amount total_amount_'+response[i]['master_id']+'" >0.00 </span></td>';
                                 html+='<td></td>';
                             html+='</tr>';
                         }
@@ -320,7 +321,7 @@
                                 html+='<td></td>';  
                                 //html+='<td></td>';  
                                 html+='<td colspan="2" align="right">Grand Total: </td>';
-                                html+='<td><input disabled type="text" name="grand_totalamount" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td><input disabled type="number" name="grand_totalamount" class="form-control grand_totalamount" placeholder="0.00" /></td>';
                                 html+='<td></td>';
                             html+='</tr>';
                             html+='<tr>';
@@ -330,8 +331,8 @@
                                 html+='<td></td>';  
                                 html+='<td></td>';  
                                 //html+='<td></td>';  
-                                html+='<td colspan="2" align="right">Discount: </td>';
-                                html+='<td><input type="text" name="total_discount" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td colspan="2" align="right">Discount (<span class="grand_discount">0.00</span>): </td>';
+                                html+='<td><input type="number" name="total_discount" class="form-control total_discount" placeholder="0.00" /></td>';
                                 html+='<td></td>';
                             html+='</tr>';
                             html+='<tr>';
@@ -342,7 +343,7 @@
                                 html+='<td></td>';  
                                 //html+='<td></td>';  
                                 html+='<td colspan="2" align="right">Paid: </td>';
-                                html+='<td><input type="text" name="paid" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td><input type="number" name="paid" class="form-control paid" placeholder="0.00" /></td>';
                                 html+='<td></td>';
                             html+='</tr>';
                             html+='<tr>';
@@ -353,7 +354,7 @@
                                 html+='<td></td>';  
                                 //html+='<td></td>';  
                                 html+='<td colspan="2" align="right">Due: </td>';
-                                html+='<td><input disabled type="text" name="due" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td><input disabled type="number" name="due" class="form-control due" placeholder="0.00" /></td>';
                                 html+='<td></td>';
                             html+='</tr>';
                     }
@@ -365,8 +366,57 @@
         $('body').on('click', '.btn-form-generate', function () {
             onChangeSelection();
         });
-        $('body').on('keyup','.quantity',function(){
+        $('body').on('keyup','.quantity, .paid, .total_discount',function(){
+            product_id=$(this).parent().parent().attr('product_id');
+            discount=$(this).parent().parent().attr('discount');
+            trade_price=$(this).parent().parent().attr('trade_price');
+            instock=$(this).parent().parent().attr('instock');
+            quantity=$(this).val();
+            
+            total_amount=trade_price*quantity;
+            $('.total_amount_'+product_id).html(total_amount.toFixed(2));
+            
+            grand_totalamount=0;
+            if($('.single_amount').length>0){
+                $('.single_amount').each(function( index ) {
+                    console.log( index + ": " + $( this ).text() );
+                    grand_totalamount+=parseFloat($( this ).text());
+                });
+            }
+            $('.grand_totalamount').val(grand_totalamount.toFixed(2));
+            
+            
+            total_discount=0;
+            if($('.single_discount').length>0){
+                $('.single_discount').each(function( index ) {
+                    console.log( index + ": " + $( this ).text() );
+                    total_discount+=parseFloat($( this ).text());
+                });
+            }
+            $('.grand_discount').html(total_discount.toFixed(2));
+            total_discount=$('.total_discount').val();
+            
+            due=grand_totalamount-$('.paid').val()-total_discount;
+            $('.due').val(due.toFixed(2));
+        });
+        $('body').on('keyup','.paid',function(){
             $('.btn-form-review').show();
+        });
+        $('body').on('click','.btn-form-review',function(){
+            if($('.paid').val()<=0){
+                alert('Sorry, you have to pay some money.');
+                return;
+            }
+            if(confirm("Do you really want to review current data?")){
+//                $.ajax({
+//                    url: baseUrl + 'purchase/reviewPurchaseTable',
+//                    type: 'post',
+//                    data: {currentSupplier: currentSupplier, productCategory:productCategory,currentCompanies:currentCompanies, currentProductCode: currentProductCode},
+//                    success: function (response) {
+//                        response = jQuery.parseJSON(response);
+//                    }
+//                });
+            }
         });
     });
 </script>
