@@ -19,6 +19,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Nayeem Changes
 application/ci_session/
 uploads/
+application/config/database.php
 
 # IDE Files
 #-------------------------

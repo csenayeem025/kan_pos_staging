@@ -58,7 +58,24 @@ class Purchase extends CI_Controller {
 
     public function reviewPurchaseTable() {
         $this->onLogCheck();
-        echo 'reviewPurchaseTable';
+        
+        echo '<pre>';
+        //print_r($this->input->post()); // total_discount, paid, quantity[], product_id[], currentSupplier, currentBrands, currentProductCode, productCategory
+        
+        $quantity=$this->input->post('quantity');
+        if(count($quantity)>0):
+            foreach($quantity as $key=>$value):
+                if(isset($value)&&!empty($value)):
+                    //echo $key;
+                    $product_id=$this->input->post('product_id')[$key];
+                    $product_single=$this->products_model->get_data_all($product_id);
+                    $product_single=$product_single[0];
+                    print_r($product_single);
+                endif;
+            endforeach;
+        endif;
+        //print_r($quantity);
+        
         die();
     }
 

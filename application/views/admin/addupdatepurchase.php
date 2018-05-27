@@ -300,13 +300,13 @@
                     html = '';
                     if (response.length > 0) {
                         for(i=0;i<response.length;i++){
-                            //response[i]['discount']=9;
+                            response[i]['discount']=9;
                             html+='<tr product_id="'+response[i]['master_id']+'" trade_price="'+response[i]['trade_price']+'" discount="'+response[i]['discount']+'" instock="'+response[i]['instock']+'">';
                                 html+='<td>'+(i+1)+'</td>';
                                 html+='<td>'+response[i]['master_p_name']+'</td>';
                                 html+='<td>'+response[i]['expire_date']+'</td>';
                                 html+='<td>'+response[i]['instock']+'</td>';
-                                html+='<td><input type="number" name="quantity[]" class="form-control quantity" placeholder="0.00" /></td>';
+                                html+='<td><input type="number" name="quantity[]" class="form-control quantity" placeholder="0.00" /><input type="hidden" name="product_id[]" value="'+response[i]['master_id']+'" /></td>';
                                 html+='<td><span class="single_discount ">'+response[i]['discount']+'</span></td>';
                                 html+='<td>'+response[i]['trade_price']+'</td>';
                                 html+='<td><span class="single_amount total_amount_'+response[i]['master_id']+'" >0.00 </span></td>';
@@ -402,22 +402,27 @@
         $('body').on('keyup','.paid',function(){
             $('.btn-form-review').show();
         });
+        function onReportModalAlert(str) {
+            $('#myReportModal .modal-body').html(str);
+            $('#myReportModal').modal('show');
+        }
         $('body').on('click','.btn-form-review',function(){
             if($('.paid').val()<=0){
                 alert('Sorry, you have to pay some money.');
                 return;
             }
             if(confirm("Do you really want to review current data?")){
-//                $.ajax({
-//                    url: baseUrl + 'purchase/reviewPurchaseTable',
-//                    type: 'post',
-//                    data: {currentSupplier: currentSupplier, productCategory:productCategory,currentCompanies:currentCompanies, currentProductCode: currentProductCode},
-//                    success: function (response) {
-//                        response = jQuery.parseJSON(response);
-//                    }
-//                });
+                $.ajax({
+                    url: baseUrl + 'purchase/reviewPurchaseTable',
+                    type: 'post',
+                    data:$('#currentAdminForm').serialize(),
+                    success: function (response) {
+                        onReportModalAlert(response);
+                    }
+                });
             }
         });
+        
     });
 </script>
 <style type="text/css">
@@ -431,6 +436,39 @@
     .autocomplete-suggestions strong { font-weight: bold; color: #000; }
     .autocomplete-group { padding: 2px 5px; font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
 </style>
+<div class="modal fade" id="myReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog loginModalWrapper" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span style="float:left;">Report</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    div#myReportModal {
+        z-index: 9999;
+        
+    }
+    div#myReportModal  .modal-dialog{
+        top:15%;
+        width:90%;
+    }
+    .modal-header{
+        min-height:100px !important;
+    }
+    .modal-backdrop.in{
+        opacity: 0;
+    }
+    .modal-backdrop{
+        position: inherit;
+    }
+</style> 
 
 
 
